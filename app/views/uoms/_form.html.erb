@@ -1,0 +1,27 @@
+<%= form_with(model: uom, local: true) do |form| %>
+  <% if uom.errors.any? %>
+    <div class="alert alert-danger">
+      <h4>Errors:</h4>
+      <ul>
+        <% uom.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Back", uoms_path, class: "btn btn-secondary ml-2" %>
+  </div>
+<% end %>

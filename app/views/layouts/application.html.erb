@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MyApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <!-- Core CSS/JS via CDN (fast dev setup) -->
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <!-- Bootstrap 4 CSS & JS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+  <!-- AdminLTE v3 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+  <!-- FontAwesome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  <%= yield :head %>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <!-- pushmenu button: collapse / expand sidebar -->
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="<%= root_path %>" class="nav-link">Home</a>
+        </li>
+      </ul>
+
+      <!-- Right navbar -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <span class="nav-link">Signed in as: <%= defined?(current_user) && current_user ? current_user.name : 'Guest' %></span>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="<%= root_path %>" class="brand-link">
+        <span class="brand-text font-weight-light">My Admin</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Products menu with dropdown -->
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-box"></i>
+                <p>
+                  Product
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="<%= products_path %>" class="nav-link <%= 'active' if controller_name == 'products' %>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>List Product</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="<%= uoms_path %>" class="nav-link <%= 'active' if controller_name == 'uoms' %>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>UoM</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1><%= content_for?(:page_title) ? yield(:page_title) : "Dashboard" %></h1>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <!-- flash messages -->
+          <% flash.each do |k,v| %>
+            <div class="alert alert-<%= k == "notice" ? "success" : "danger" %> alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <%= v %>
+            </div>
+          <% end %>
+
+          <%= yield %>
+        </div>
+      </section>
+      <!-- /.content -->
+
+    </div>
+    <!-- /.content-wrapper -->
+
+    <footer class="main-footer">
+      <div class="float-right d-none d-sm-inline">
+        MyApp
+      </div>
+      <strong>&copy; <%= Time.current.year %></strong>
+    </footer>
+  </div>
+  <!-- ./wrapper -->
+</body>
+</html>

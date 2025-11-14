@@ -1,0 +1,24 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: postgres
+  password: 12341234
+  host: 127.0.0.1
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+
+development:
+  <<: *default
+  database: ecolocal_development
+
+
+test:
+  <<: *default
+  database: ecolocal_test
+
+production:
+  <<: *default
+  database: ecolocal_production
+  username: ecolocal
+  password: <%= ENV["ECOLOCAL_DATABASE_PASSWORD"] %>

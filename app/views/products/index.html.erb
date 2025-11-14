@@ -1,0 +1,47 @@
+<% content_for :page_title, "Products" %>
+
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h3 class="card-title">Products</h3>
+    <div class="card-tools">
+      <%= link_to "New Product", new_product_path, class: "btn btn-sm btn-primary" %>
+    </div>
+  </div>
+
+  <div class="card-body table-responsive p-0">
+    <table class="table table-hover text-nowrap mb-0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>SKU</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @products.each do |p| %>
+          <tr>
+            <td><%= p.name %></td>
+            <td><%= p.sku %></td>
+            <td><%= p.quantity %></td>
+            <td><%= number_to_currency(p.price) %></td>
+            <td>
+              <%= link_to "Show", product_path(p), class: "btn btn-sm btn-outline-secondary" %>
+              <%= link_to "Edit", edit_product_path(p), class: "btn btn-sm btn-outline-primary" %>
+              <%= button_to "Delete",
+    product_path(p),
+    method: :delete,
+    data: { confirm: "Are you sure?" },
+    form: { class: "d-inline" },
+    class: "btn btn-sm btn-outline-danger"
+%>
+
+
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
