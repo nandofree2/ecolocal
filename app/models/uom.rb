@@ -1,2 +1,0 @@
-class Uom < ApplicationRecord
-end

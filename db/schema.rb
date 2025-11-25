@@ -25,7 +25,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_14_133730) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "uoms", force: :cascade do |t|
+  create_table "unit_of_measurements", force: :cascade do |t|
     t.string "name"
     t.integer "quantity"
     t.datetime "created_at", null: false

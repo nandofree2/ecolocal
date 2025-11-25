@@ -1,9 +1,9 @@
-<%= form_with(model: uom, local: true) do |form| %>
-  <% if uom.errors.any? %>
+<%= form_with(model: unit_of_measurement, local: true) do |form| %>
+  <% if unit_of_measurement.errors.any? %>
     <div class="alert alert-danger">
       <h4>Errors:</h4>
       <ul>
-        <% uom.errors.full_messages.each do |msg| %>
+        <% unit_of_measurement.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
       </ul>
@@ -22,6 +22,6 @@
 
   <div class="form-group">
     <%= form.submit class: "btn btn-primary" %>
-    <%= link_to "Back", uoms_path, class: "btn btn-secondary ml-2" %>
+    <%= link_to "Back", unit_of_measurements_path, class: "btn btn-secondary ml-2" %>
   </div>
 <% end %>
