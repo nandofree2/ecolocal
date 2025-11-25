@@ -1,0 +1,16 @@
+<% content_for :page_title, "UOM Details" %>
+
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title"><%= @unit_of_measurement.name %></h3>
+    <div class="card-tools">
+      <%= link_to "Edit", edit_unit_of_measurement_path(@unit_of_measurement), class: "btn btn-sm btn-primary" %>
+      <%= link_to "Back", unit_of_measurements_path, class: "btn btn-sm btn-secondary" %>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <p><strong>Name:</strong> <%= @unit_of_measurement.name %></p>
+    <p><strong>Quantity:</strong> <%= @unit_of_measurement.quantity %></p>
+  </div>
+</div>

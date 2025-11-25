@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root to: "products#index"
-  resources :uoms
+  resources :unit_of_measurements
   resources :products
 
   get "up" => "rails/health#show", as: :rails_health_check
