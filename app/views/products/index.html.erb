@@ -14,22 +14,26 @@
         <tr>
           <th>Name</th>
           <th>SKU</th>
+          <th>Category</th>
+          <th>UOM</th>
           <th>Qty</th>
           <th>Price</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        <% @products.each do |p| %>
+        <% @products.each do |product| %>
           <tr>
-            <td><%= p.name %></td>
-            <td><%= p.sku %></td>
-            <td><%= p.quantity %></td>
-            <td><%= number_to_currency(p.price) %></td>
+            <td><%= product.name %></td>
+            <td><%= product.sku %></td>
+            <td><%= product.category.name %></td>
+            <td><%= product.unit_of_measurement.name %></td>
+            <td><%= product.quantity %></td>
+            <td><%= number_to_currency(product.price) %></td>
             <td>
-              <%= link_to "Show", product_path(p), class: "btn btn-sm btn-outline-secondary" %>
-              <%= link_to "Edit", edit_product_path(p), class: "btn btn-sm btn-outline-primary" %>
-              <%= button_to "Delete",product_path(p),method: :delete,data: { confirm: "Are you sure?" },form: { class: "d-inline" },class: "btn btn-sm btn-outline-danger"
+              <%= link_to "Show", product_path(product), class: "btn btn-sm btn-outline-secondary" %>
+              <%= link_to "Edit", edit_product_path(product), class: "btn btn-sm btn-outline-primary" %>
+              <%= button_to "Delete",product_path(product),method: :delete,data: { confirm: "Are you sure?" },form: { class: "d-inline" },class: "btn btn-sm btn-outline-danger"
               %>
             </td>
           </tr>

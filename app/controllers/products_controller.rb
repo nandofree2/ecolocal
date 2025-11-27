@@ -13,6 +13,8 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
+    @categories = Category.pluck(:id,:name)
+    @unit_of_measurements = UnitOfMeasurement.pluck(:id,:name)
   end
 
   # GET /products/1/edit
@@ -65,6 +67,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:name, :sku, :description, :status, :quantity, :price)
+      params.require(:product).permit(:name, :sku, :description, :status, :quantity, :price, :category_id, :unit_of_measurement_id)
     end
 end

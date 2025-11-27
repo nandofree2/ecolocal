@@ -2,7 +2,7 @@
 
 <div class="card">
   <div class="card-header d-flex justify-content-between align-items-center">
-    <h3 class="card-title">Units of Measure</h3>
+    <h3 class="card-title">Units of Measurement</h3>
     <div class="card-tools">
       <%= link_to "New UOM", new_unit_of_measurement_path, class: "btn btn-sm btn-primary" %>
     </div>
@@ -13,19 +13,21 @@
       <thead>
         <tr>
           <th>Name</th>
+          <th>SKU</th>
           <th>Quantity</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        <% @unit_of_measurements.each do |u| %>
+        <% @unit_of_measurements.each do |uom| %>
           <tr>
-            <td><%= u.name %></td>
-            <td><%= u.quantity %></td>
+            <td><%= uom.name %></td>
+            <td><%= uom.sku %></td>
+            <td><%= uom.quantity %></td>
             <td>
-              <%= link_to "Show", unit_of_measurement_path(u), class: "btn btn-sm btn-outline-secondary" %>
-              <%= link_to "Edit", edit_unit_of_measurement_path(u), class: "btn btn-sm btn-outline-primary" %>
-              <%= button_to "Delete",unit_of_measurement_path(u),method: :delete,data: { confirm: "Are you sure?" },form: { class: "d-inline" },class: "btn btn-sm btn-outline-danger"%>
+              <%= link_to "Show", unit_of_measurement_path(uom), class: "btn btn-sm btn-outline-secondary" %>
+              <%= link_to "Edit", edit_unit_of_measurement_path(uom), class: "btn btn-sm btn-outline-primary" %>
+              <%= button_to "Delete",unit_of_measurement_path(uom),method: :delete,data: { confirm: "Are you sure?" },form: { class: "d-inline" },class: "btn btn-sm btn-outline-danger"%>
             </td>
           </tr>
         <% end %>
