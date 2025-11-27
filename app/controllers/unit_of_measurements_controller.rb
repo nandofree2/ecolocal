@@ -58,6 +58,6 @@ class UnitOfMeasurementsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def unit_of_measurement_params
-      params.require(:unit_of_measurement).permit(:name, :quantity)
+      params.require(:unit_of_measurement).permit(:name, :quantity, :sku)
     end
 end
