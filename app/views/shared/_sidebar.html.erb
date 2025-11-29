@@ -32,10 +32,7 @@
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-box"></i>
-            <p>
-              Product
-              <i class="right fas fa-angle-left"></i>
-            </p>
+            <p>Product<i class="right fas fa-angle-left"></i></p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
@@ -58,9 +55,27 @@
             </li>
           </ul>
         </li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-box"></i>
+            <p>User<i class="right fas fa-angle-left"></i></p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<%= products_path %>" class="nav-link <%= 'active' if controller_name == 'products' %>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>List Product</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<%= categories_path %>" class="nav-link <%= 'active' if controller_name == 'categories' %>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Category</p>
+              </a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </nav>
-    <!-- /.sidebar-menu -->
   </div>
-  <!-- /.sidebar -->
 </aside>

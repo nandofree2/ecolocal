@@ -13,3 +13,26 @@
  *= require_tree .
  *= require_self
  */
+/* Force modal body fade and highlighted product name (high specificity + important) */
+#deleteConfirmModal .modal-body.fade-item {
+  opacity: 0;
+  transition: opacity 0.35s ease-in-out;
+}
+
+#deleteConfirmModal .modal-body.fade-item.showing {
+  opacity: 1;
+}
+
+/* Emphasize product name and SKU: using very specific selector + !important */
+#deleteConfirmModal .modal-body #delete-item-name {
+  color: #dc3545 !important; /* Bootstrap danger red */
+  font-weight: 700 !important;
+  background: rgba(220,53,69,0.08) !important; /* subtle red background */
+  padding: 0.08rem 0.25rem !important;
+  border-radius: 0.25rem !important;
+}
+
+#deleteConfirmModal .modal-body #delete-item-sku {
+  color: #6c757d !important;
+  font-weight: 600 !important;
+}
