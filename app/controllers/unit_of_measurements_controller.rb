@@ -1,5 +1,6 @@
 class UnitOfMeasurementsController < ApplicationController
   before_action :set_unit_of_measurement, only: %i[ show edit update destroy ]
+  authorize_resource
 
   def index
     @unit_of_measurements = UnitOfMeasurement.all

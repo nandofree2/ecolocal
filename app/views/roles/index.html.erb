@@ -1,0 +1,114 @@
+<% provide :page_title, "Roles" %>
+
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Roles List</h3>
+    <div class="card-tools">
+      <%= link_to "Add New Role", new_role_path, class: "btn btn-primary btn-sm" %>
+    </div>
+  </div>
+  <div class="card-body">
+    <% if @roles.any? %>
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Users Count</th>
+            <th>Permissions</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @roles.each do |role| %>
+            <tr>
+              <td><%= role.id %></td>
+              <td><%= role.name %></td>
+              <td><%= truncate(role.description, length: 50) %></td>
+              <td><span class="badge badge-secondary"><%= role.users.count %></span></td>
+              <td>
+                <% product_perms = role.permissions_hash.fetch('Product', []) %>
+                <span class="small text-muted">Product:</span>
+                <% if product_perms.any? %>
+                  <span class="badge bg-info"><%= product_perms.join(', ') %></span>
+                <% else %>
+                  <span class="text-muted small">none</span>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to "View", role_path(role), class: "btn btn-info btn-xs" %>
+                <%= link_to "Edit", edit_role_path(role), class: "btn btn-warning btn-xs" %>
+                <%= link_to "Permissions", "#permissions-#{role.id}", class: "btn btn-secondary btn-xs", data: { bs_toggle: 'collapse' } %>
+                <%= link_to "Delete", role_path(role), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-xs" %>
+              </td>
+            </tr>
+
+            <tr class="collapse-row">
+              <td colspan="6" class="p-0 border-0">
+                <div class="collapse" id="permissions-<%= role.id %>">
+                  <div class="card card-body">
+                    <%= form_with model: role, url: role_path(role), method: :patch, local: true do |f| %>
+                      <div class="mb-3">
+                        <h5>Manage Permissions for: <strong><%= role.name %></strong></h5>
+                        <p class="text-muted">Toggle actions for each resource.</p>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-4">
+                          <fieldset>
+                            <legend class="small">Product</legend>
+                            <%= hidden_field_tag "role[permissions][Product][]", "" %>
+                            <% ['show','read','edit','delete'].each do |act| %>
+                              <div class="form-check">
+                                <%= check_box_tag "role[permissions][Product][]", act, role.permissions_hash.fetch('Product', []).include?(act), id: "role_#{role.id}_product_#{act}", class: 'form-check-input' %>
+                                <%= label_tag "role_#{role.id}_product_#{act}", act.humanize, class: 'form-check-label' %>
+                              </div>
+                            <% end %>
+                          </fieldset>
+                        </div>
+
+                        <div class="col-md-4">
+                          <fieldset>
+                            <legend class="small">Category</legend>
+                            <%= hidden_field_tag "role[permissions][Category][]", "" %>
+                            <% ['show','read','edit','delete'].each do |act| %>
+                              <div class="form-check">
+                                <%= check_box_tag "role[permissions][Category][]", act, role.permissions_hash.fetch('Category', []).include?(act), id: "role_#{role.id}_category_#{act}", class: 'form-check-input' %>
+                                <%= label_tag "role_#{role.id}_category_#{act}", act.humanize, class: 'form-check-label' %>
+                              </div>
+                            <% end %>
+                          </fieldset>
+                        </div>
+
+                        <div class="col-md-4">
+                          <fieldset>
+                            <legend class="small">UOM</legend>
+                            <%= hidden_field_tag "role[permissions][UnitOfMeasurement][]", "" %>
+                            <% ['show','read','edit','delete'].each do |act| %>
+                              <div class="form-check">
+                                <%= check_box_tag "role[permissions][UnitOfMeasurement][]", act, role.permissions_hash.fetch('UnitOfMeasurement', []).include?(act), id: "role_#{role.id}_uom_#{act}", class: 'form-check-input' %>
+                                <%= label_tag "role_#{role.id}_uom_#{act}", act.humanize, class: 'form-check-label' %>
+                              </div>
+                            <% end %>
+                          </fieldset>
+                        </div>
+                      </div>
+
+                      <div class="mt-3">
+                        <%= f.submit "Save Permissions", class: "btn btn-primary btn-sm" %>
+                        <%= link_to "Close", "#permissions-#{role.id}", class: "btn btn-secondary btn-sm", data: { bs_toggle: 'collapse' } %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="text-muted">No roles found. <%= link_to "Create one", new_role_path %></p>
+    <% end %>
+  </div>
+</div>

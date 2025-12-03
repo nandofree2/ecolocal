@@ -11,9 +11,23 @@
   </ul>
   <!-- Right navbar -->
   <ul class="navbar-nav ml-auto">
-    <li class="nav-item">
-      <span class="nav-link">Signed in as: <%= defined?(current_user) && current_user ? current_user.name : 'Guest' %></span>
-    </li>
+    <% if user_signed_in? %>
+      <li class="nav-item">
+        <span class="nav-link">Signed in as: <strong><%= current_user.name %></strong></span>
+      </li>
+      <li class="nav-item">
+        <%# Use button_to to perform sign out via a form fallback (works without JS) %>
+        <%= button_to destroy_user_session_path, method: :delete, form: { class: 'd-inline' }, class: 'nav-link btn btn-link p-0', title: 'Sign Out' do %>
+          <i class="fas fa-sign-out-alt"></i>
+        <% end %>
+      </li>
+    <% else %>
+      <li class="nav-item">
+        <button class="nav-link btn btn-link" data-bs-toggle="modal" data-bs-target="#loginModal" style="padding: 0; border: none; background: none; cursor: pointer;">
+          <i class="fas fa-sign-in-alt"></i> Sign In
+        </button>
+      </li>
+    <% end %>
   </ul>
 </nav>
 <!-- /.navbar -->
@@ -28,53 +42,78 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <!-- Products menu with dropdown -->
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-box"></i>
-            <p>Product<i class="right fas fa-angle-left"></i></p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="<%= products_path %>" class="nav-link <%= 'active' if controller_name == 'products' %>">
-                <i class="far fa-circle nav-icon"></i>
-                <p>List Product</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<%= categories_path %>" class="nav-link <%= 'active' if controller_name == 'categories' %>">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Category</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<%= unit_of_measurements_path %>" class="nav-link <%= 'active' if controller_name == 'unit_of_measurements' %>">
-                <i class="far fa-circle nav-icon"></i>
-                <p>UOM</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-box"></i>
-            <p>User<i class="right fas fa-angle-left"></i></p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="<%= products_path %>" class="nav-link <%= 'active' if controller_name == 'products' %>">
-                <i class="far fa-circle nav-icon"></i>
-                <p>List Product</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<%= categories_path %>" class="nav-link <%= 'active' if controller_name == 'categories' %>">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Category</p>
-              </a>
-            </li>
-          </ul>
-        </li>
+        <!-- Products menu with dropdown (visible only to logged-in users with permission) -->
+        <% if user_signed_in? && (can?(:see_menu, Product) || can?(:read, Product)) %>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-box"></i>
+              <p>Product<i class="right fas fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+              <% if can?(:read, Product) %>
+                <li class="nav-item">
+                  <a href="<%= products_path %>" class="nav-link <%= 'active' if controller_name == 'products' %>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>List Product</p>
+                  </a>
+                </li>
+              <% end %>
+              <% if can?(:manage, Category) || can?(:read, Category) %>
+                <li class="nav-item">
+                  <a href="<%= categories_path %>" class="nav-link <%= 'active' if controller_name == 'categories' %>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Category</p>
+                  </a>
+                </li>
+              <% end %>
+              <% if can?(:manage, UnitOfMeasurement) || can?(:read, UnitOfMeasurement) %>
+                <li class="nav-item">
+                  <a href="<%= unit_of_measurements_path %>" class="nav-link <%= 'active' if controller_name == 'unit_of_measurements' %>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>UOM</p>
+                  </a>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+        
+        <!-- User & Role Management (Admin only) -->
+        <% if user_signed_in? && current_user.role&.name == "Admin" %>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-users-cog"></i>
+              <p>Access Control<i class="right fas fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <%= link_to roles_path, class: "nav-link #{controller_name == 'roles' ? 'active' : ''}" do %>
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Roles</p>
+                <% end %>
+              </li>
+              <li class="nav-item">
+                <%= link_to users_path, class: "nav-link #{controller_name == 'users' ? 'active' : ''}" do %>
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Users</p>
+                <% end %>
+              </li>
+              <li class="nav-item">
+                <%= link_to new_user_path, class: "nav-link" do %>
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add New User</p>
+                <% end %>
+              </li>
+            </ul>
+          </li>
+        <% elsif user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to edit_user_registration_path, class: "nav-link" do %>
+              <i class="nav-icon fas fa-user"></i>
+              <p>My Profile</p>
+            <% end %>
+          </li>
+        <% end %>
       </ul>
     </nav>
   </div>
