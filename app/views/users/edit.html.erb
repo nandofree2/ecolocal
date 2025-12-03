@@ -1,0 +1,56 @@
+<% provide :page_title, "Edit User" %>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Edit User</h3>
+      </div>
+      
+      <%= form_with(model: @user, local: true, class: "form") do |form| %>
+        <% if @user.errors.any? %>
+          <div class="card-body">
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <h4><i class="icon fa fa-ban"></i> <%= pluralize(@user.errors.count, 'error') %> prohibited this user from being saved:</h4>
+              <ul>
+                <% @user.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="card-body">
+          <div class="form-group">
+            <%= form.label :name %>
+            <%= form.text_field :name, class: "form-control", placeholder: "Enter user name" %>
+          </div>
+          <div class="form-group">
+            <%= form.label :email %>
+            <%= form.email_field :email, class: "form-control", placeholder: "user@example.com" %>
+          </div>
+          <div class="form-group">
+            <%= form.label :password %>
+            <span class="text-muted">(leave blank to keep current password)</span>
+            <%= form.password_field :password, class: "form-control", placeholder: "New Password" %>
+          </div>
+          <div class="form-group">
+            <%= form.label :password_confirmation, "Password Confirmation" %>
+            <%= form.password_field :password_confirmation, class: "form-control", placeholder: "Confirm New Password" %>
+          </div>
+          <div class="form-group">
+            <%= form.label :role_id, "Role" %>
+            <%= form.select :role_id, @roles, { include_blank: "Select a role" }, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <%= form.submit "Update User", class: "btn btn-warning" %>
+          <%= link_to "Back", users_path, class: "btn btn-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

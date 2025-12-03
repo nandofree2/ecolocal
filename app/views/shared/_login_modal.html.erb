@@ -1,0 +1,59 @@
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Sign In</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <form method="post" action="<%= user_session_path %>" accept-charset="UTF-8" novalidate="novalidate">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <div class="modal-body">
+          <% if flash[:alert].present? %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <%= flash[:alert] %>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <% end %>
+
+          <div class="form-group">
+            <label for="user_email">Email</label>
+            <input type="email" name="user[email]" id="user_email" value="<%= params.dig(:user, :email) %>" autofocus="autofocus" autocomplete="email" class="form-control" placeholder="Enter your email" />
+          </div>
+
+          <div class="form-group">
+            <label for="user_password">Password</label>
+            <input type="password" name="user[password]" id="user_password" autocomplete="current-password" class="form-control" placeholder="Enter your password" />
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="user[remember_me]" id="user_remember_me" value="1" />
+            <label class="form-check-label" for="user_remember_me">Remember me</label>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <input type="submit" name="commit" value="Sign In" class="btn btn-primary" data-disable-with="Sign In" />
+        </div>
+      </form>
+
+      <div class="modal-body border-top">
+        <p class="text-center text-muted">
+          Don't have an account? <%= link_to "Register here", new_user_registration_path, data: { bs_dismiss: "modal" } %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Re-open modal if there's an error after failed login
+  document.addEventListener('DOMContentLoaded', function() {
+    <% if flash[:alert].present? %>
+      const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+      loginModal.show();
+    <% end %>
+  });
+</script>
