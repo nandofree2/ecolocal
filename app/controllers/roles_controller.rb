@@ -41,8 +41,7 @@ class RolesController < ApplicationController
 
   # PATCH/PUT /roles/1 or /roles/1.json
   def update
-      @role.permissions = sanitize_permissions_param(params[:role][:permissions])
-    end
+    @role.permissions = sanitize_permissions_param(params[:role][:permissions])
 
     respond_to do |format|
       if @role.update(role_params)

@@ -43,11 +43,14 @@ class UnitOfMeasurementsController < ApplicationController
   end
 
   def destroy
-    @unit_of_measurement.destroy!
-
     respond_to do |format|
-      format.html { redirect_to unit_of_measurements_path, notice: "unit_of_measurement was successfully destroyed.", status: :see_other }
-      format.json { head :no_content }
+      if @unit_of_measurement.destroy
+        format.html { redirect_to unit_of_measurements_path, notice: "Category was successfully deleted.", status: :see_other }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to unit_of_measurements_path, alert: "Cannot delete — products still reference this category.", status: :see_other }
+        format.json { render json: @unit_of_measurement.errors, status: :unprocessable_entity }
+      end
     end
   end
 

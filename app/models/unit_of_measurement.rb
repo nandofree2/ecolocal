@@ -1,5 +1,5 @@
 class UnitOfMeasurement< ApplicationRecord
-  has_many :products
+  has_many :products, dependent: :restrict_with_error
   validates_presence_of :name, :quantity, :sku
   validates_uniqueness_of :name
 

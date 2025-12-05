@@ -44,10 +44,8 @@
               <h1><%= content_for?(:page_title) ? yield(:page_title) : "Dashboard" %></h1>
             </div>
           </div>
-        </div><!-- /.container-fluid -->
       </section>
 
-      <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
           <!-- flash messages -->
@@ -61,10 +59,8 @@
           <%= yield %>
         </div>
       </section>
-      <!-- /.content -->
 
     </div>
-    <!-- /.content-wrapper -->
 
     <footer class="main-footer">
       <div class="float-right d-none d-sm-inline">
@@ -73,9 +69,10 @@
       <strong>&copy; <%= Time.current.year %></strong>
     </footer>
   </div>
-  <!-- ./wrapper -->
 
   <%= render "shared/product_delete_modal" %>
+  <%= render "shared/category_delete_modal" %>
+  <%= render "shared/unit_of_measurement_delete_modal" %>
   <% if !user_signed_in? %>
     <%= render "shared/login_modal" %>
   <% end %>
