@@ -27,7 +27,11 @@
             <td>
               <%= link_to "Show", unit_of_measurement_path(uom), class: "btn btn-sm btn-outline-secondary" %>
               <%= link_to "Edit", edit_unit_of_measurement_path(uom), class: "btn btn-sm btn-outline-primary" %>
-              <%= button_to "Delete",unit_of_measurement_path(uom),method: :delete,data: { confirm: "Are you sure?" },form: { class: "d-inline" },class: "btn btn-sm btn-outline-danger"%>
+              <%= button_to "Delete",unit_of_measurement_path(uom),method: :delete, form: { class: "d-inline" },class: "btn btn-sm btn-outline-danger unit-of-measurement-show-delete-modal",data: {
+                url: unit_of_measurement_path(uom),
+                name: uom.name,
+                sku: uom.sku
+              }%>
             </td>
           </tr>
         <% end %>
