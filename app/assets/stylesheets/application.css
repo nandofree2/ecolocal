@@ -36,3 +36,36 @@
   color: #6c757d !important;
   font-weight: 600 !important;
 }
+
+.gallery-main-img {
+  cursor: zoom-in;
+  transition: transform 0.3s ease;
+}
+
+.zoom-hover:hover {
+  transform: scale(1.07);
+}
+
+.thumb-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 5px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border .2s;
+}
+
+.thumb-img.active-thumb {
+  border-color: #0d6efd;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 9999;
+}
