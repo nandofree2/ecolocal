@@ -10,7 +10,7 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12 text-center p-4">
 
       <div id="productCarousel" class="carousel slide">
         <div class="carousel-inner">
@@ -19,7 +19,7 @@
             <div class="carousel-item active">
               <img 
                 src="<%= url_for(@product.cover_image) %>"
-                class="d-block w-50 gallery-main-img zoom-hover"
+                class="gallery-main-img zoom-hover"
                 data-full="<%= url_for(@product.cover_image) %>"
               >
             </div>
@@ -29,7 +29,7 @@
             <div class="carousel-item <%= 'active' if !@product.cover_image.attached? && index == 0 %>">
               <img 
                 src="<%= url_for(img) %>"
-                class="d-block w-50 gallery-main-img zoom-hover"
+                class="gallery-main-img zoom-hover"
                 data-full="<%= url_for(img) %>"
               >
             </div>
@@ -45,7 +45,7 @@
         </button>
       </div>
 
-      <div class="d-flex gap-2 mt-3 flex-wrap">
+      <div class="gap-2 mt-3 flex-wrap">
 
         <% if @product.cover_image.attached? %>
           <img 
@@ -71,7 +71,7 @@
   </div>
 
   <div class="modal fade" id="fullscreenGalleryModal" tabindex="-1">
-    <div class="modal-dialog modal-fullscreen">
+    <div class="modal-dialog ">
       <div class="modal-content bg-dark text-center">
         <span class="modal-close-btn" data-bs-dismiss="modal">&times;</span>
         <img id="fullscreenImage" class="img-fluid">

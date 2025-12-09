@@ -69,3 +69,17 @@
   cursor: pointer;
   z-index: 9999;
 }
+
+.carousel-item {
+  text-align: center !important; /* force align center */
+}
+
+.carousel-item img.gallery-main-img {
+  display: inline-block !important; 
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 300px;        /* or any size you want */
+  max-height: 300px;
+  object-fit: cover;
+}
+
