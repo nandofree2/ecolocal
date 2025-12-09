@@ -1,5 +1,4 @@
 document.addEventListener("turbo:load", () => {
-  console.log("unit-of-measurement_delete_modal loaded");
   const modalElement = document.getElementById("unit-of-measurement-deleteConfirmModal");
   const deleteForm = document.getElementById("unit-of-measurement-deleteConfirmForm");
   const itemNameElement = document.getElementById("unit-of-measurement-delete-item-name");

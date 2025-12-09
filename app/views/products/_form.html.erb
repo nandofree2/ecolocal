@@ -79,7 +79,12 @@
     <div id="previewContainer" class="mt-2 d-flex flex-wrap">
       <% if product.preview_images.attached? %>
         <% product.preview_images.each do |img| %>
-          <img src="<%= url_for(img) %>" class="img-thumbnail mr-2 mb-2" style="max-height:120px;">
+          <div class="me-2 mb-2 text-center">
+            <img src="<%= url_for(img) %>" class="img-thumbnail" style="max-height:120px; display:block;" />
+                <div class="mt-1">
+                  <button type="button" class="btn btn-sm btn-outline-danger remove-preview-btn" data-url="<%= purge_preview_image_product_path(product, attachment_id: img.id) %>">Remove</button>
+                </div>
+          </div>
         <% end %>
       <% end %>
     </div>
