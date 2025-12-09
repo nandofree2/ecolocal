@@ -9,7 +9,7 @@
       </ul>
     </div>
   <% end %>
-  
+
   <div class="form-row">
     <div class="form-group col-md-3">
       <%= form.label :name %>
@@ -20,27 +20,37 @@
       <%= form.label :quantity %>
       <%= form.number_field :quantity, class: "form-control", required: true %>
     </div>
+
     <div class="form-group col-md-3">
       <%= form.label :price %>
       <%= form.number_field :price, step: :any, class: "form-control", required: true %>
     </div>
   </div>
+
   <div class="form-row">
     <div class="form-group col-md-3">
       <%= form.label :status_product, "Status" %>
-      <%= form.select :status_product, Product.status_products.keys.map { |s| [s.titleize, s] }, { prompt: "Select status" },class: "form-control" %>
+      <%= form.select :status_product, Product.status_products.keys.map { |s| [s.titleize, s] },
+            { prompt: "Select status" },
+            class: "form-control" %>
     </div>
 
-        <div class="form-group col-md-3">
-
-      <%= form.label :unit_of_measurement_id, "Unit of Measurement", class: "form-label" %>
-      <%= form.select :unit_of_measurement_id,@unit_of_measurements.map { |id, name| [name, id] },{ prompt: "Select UOM" },class: "form-control", required: true %>
+    <div class="form-group col-md-3">
+      <%= form.label :unit_of_measurement_id, "Unit of Measurement" %>
+      <%= form.select :unit_of_measurement_id,
+            @unit_of_measurements.map { |id, name| [name, id] },
+            { prompt: "Select UOM" },
+            class: "form-control",
+            required: true %>
     </div>
 
-        <div class="form-group col-md-3">
-
-      <%= form.label :category_id, "Category", class: "form-label" %>
-      <%= form.select :category_id,@categories.map { |id, name| [name, id] },{ prompt: "Select Category" },class: "form-control", required: true %>
+    <div class="form-group col-md-3">
+      <%= form.label :category_id, "Category" %>
+      <%= form.select :category_id,
+            @categories.map { |id, name| [name, id] },
+            { prompt: "Select Category" },
+            class: "form-control",
+            required: true %>
     </div>
   </div>
 
@@ -49,7 +59,33 @@
     <%= form.text_area :description, rows: 4, class: "form-control" %>
   </div>
 
-  <div class="form-group">
+  <div class="form-group mt-4">
+    <%= form.label :cover_image, "Cover Image" %>
+    <%= form.file_field :cover_image, accept: "image/*", class: "form-control-file", onchange: "previewCoverImage(event)" %>
+
+    <div class="mt-2">
+      <% if product.cover_image.attached? %>
+        <img id="coverPreview" src="<%= url_for(product.cover_image) %>" class="img-thumbnail" style="max-height:150px;">
+      <% else %>
+        <img id="coverPreview" class="img-thumbnail d-none" style="max-height:150px;">
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group mt-3">
+    <%= form.label :preview_images, "Preview Images (max 5)" %>
+    <%= form.file_field :preview_images, multiple: true, accept: "image/*", class: "form-control-file", onchange: "previewMultipleImages(event)" %>
+
+    <div id="previewContainer" class="mt-2 d-flex flex-wrap">
+      <% if product.preview_images.attached? %>
+        <% product.preview_images.each do |img| %>
+          <img src="<%= url_for(img) %>" class="img-thumbnail mr-2 mb-2" style="max-height:120px;">
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group mt-4">
     <%= form.submit class: "btn btn-primary" %>
     <%= link_to "Back", products_path, class: "btn btn-secondary ml-2" %>
   </div>
