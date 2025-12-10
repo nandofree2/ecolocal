@@ -56,7 +56,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_09_040222) do
     t.string "sku"
     t.text "description"
     t.integer "status_product", default: 0, null: false
-    t.integer "quantity"
     t.decimal "price"
     t.bigint "category_id", null: false
     t.bigint "unit_of_measurement_id", null: false

@@ -30,6 +30,35 @@ User.find_or_create_by!(email: "manager@test.com") do |user|
   user.role = manager_role
 end
 
+unless Category.exists?(1)
+  Category.create!(id: 1, name: "T-shirt", sku: "TS")
+  Category.create!(id: 2, name: "Jeans", sku: "JN")
+  Category.create!(id: 3, name: "Sweater", sku: "SW")
+  Category.create!(id: 4, name: "accessories", sku: "AC")
+  Category.create!(id: 5, name: "dresses", sku: "DR")
+end
+
+unless UnitOfMeasurement.exists?(1)
+  UnitOfMeasurement.create!(id: 1, name: "PCS", sku: "PC", quantity:1)
+  UnitOfMeasurement.create!(id: 2, name: "Lusin", sku: "LS", quantity:12)
+  UnitOfMeasurement.create!(id: 3, name: "Box", sku: "BX", quantity:20)
+  UnitOfMeasurement.create!(id: 4, name: "Gross", sku: "GR", quantity:144)
+end
+
+# random generator simple
+
+100.times do
+  Product.create!(
+    name: Faker::Commerce.product_name,
+    sku: rand(10000..99999).to_s,
+    description: Faker::Lorem.sentence(word_count: 5),
+    status_product: 1,
+    price: rand(10.0..500.0).round(2),
+    category_id: rand(1..5),
+    unit_of_measurement_id: rand(1..4)
+  )
+end
+
 puts "✅ Seeding complete! Created roles: Admin, Manager, User"
 puts "📧 Test Admin account: admin@test.com / 12341234"
 puts "📧 Test manager account: manager@test.com / 12341234"
