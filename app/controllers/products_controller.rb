@@ -4,8 +4,35 @@ class ProductsController < ApplicationController
 
   # GET /products or /products.json
   def index
-    @products = Product.all
+    @q = Product.ransack(params[:q])
+    @products = @q.result.includes(:category)
+                .order(created_at: :desc)
+                .page(params[:page])
+                .per(20)
+    @categories = Category.all
+    
+    # @sort = params[:sort] || "name"
+    # @direction = params[:direction] || "asc"
+
+    # sortable_columns = {
+    #   "name"     => "products.name",
+    #   "sku"      => "products.sku",
+    #   "price"    => "products.price",
+    #   "category" => "categories.name",
+    #   "uom"      => "unit_of_measurements.name"
+    # }
+
+    # sort_column = sortable_columns[@sort] || "products.name"
+
+    # @products = Product
+    #   .includes(:category, :unit_of_measurement)
+    #   .left_joins(:category, :unit_of_measurement)
+    #   .order("#{sort_column} #{@direction}")
+    #   .page(params[:page])
+    #   .per(20)
   end
+
+
 
   # GET /products/1 or /products/1.json
   def show
@@ -41,8 +68,6 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT /products/1 or /products/1.json
   def update
-    # Handle attachments separately and avoid overwriting attachments when no files are submitted.
-    # Build a params hash for update that excludes attachment keys when they are blank.
     update_params = product_params.dup
 
     # Remove attachment keys when no files were submitted so we don't clear existing attachments
@@ -74,7 +99,6 @@ class ProductsController < ApplicationController
       @product.preview_images.attach(new_files)
     end
 
-    # Remove attachment keys from params to avoid ActiveStorage being invoked again by update
     update_params.delete(:cover_image)
     update_params.delete(:preview_images)
 
@@ -92,7 +116,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to products_path, notice: "Product was successfully destroyed.", status: :see_other }
-      format.json { head :no_content }
+      format.turbo_stream
     end
   end
 
