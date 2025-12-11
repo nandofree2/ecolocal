@@ -1,35 +1,15 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
+  before_action :set_categories, only: %i[index new show edit update destroy ]
   authorize_resource
 
   # GET /products or /products.json
   def index
     @q = Product.ransack(params[:q])
-    @products = @q.result.includes(:category)
+    @products = @q.result.includes(:category, :unit_of_measurement)
                 .order(created_at: :desc)
                 .page(params[:page])
                 .per(20)
-    @categories = Category.all
-    
-    # @sort = params[:sort] || "name"
-    # @direction = params[:direction] || "asc"
-
-    # sortable_columns = {
-    #   "name"     => "products.name",
-    #   "sku"      => "products.sku",
-    #   "price"    => "products.price",
-    #   "category" => "categories.name",
-    #   "uom"      => "unit_of_measurements.name"
-    # }
-
-    # sort_column = sortable_columns[@sort] || "products.name"
-
-    # @products = Product
-    #   .includes(:category, :unit_of_measurement)
-    #   .left_joins(:category, :unit_of_measurement)
-    #   .order("#{sort_column} #{@direction}")
-    #   .page(params[:page])
-    #   .per(20)
   end
 
 
@@ -41,13 +21,11 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
-    @categories = Category.pluck(:id,:name)
     @unit_of_measurements = UnitOfMeasurement.pluck(:id,:name)
   end
 
   # GET /products/1/edit
   def edit
-    @categories = Category.pluck(:id,:name)
     @unit_of_measurements = UnitOfMeasurement.pluck(:id,:name)
   end
 
@@ -70,23 +48,19 @@ class ProductsController < ApplicationController
   def update
     update_params = product_params.dup
 
-    # Remove attachment keys when no files were submitted so we don't clear existing attachments
     if params[:product].blank? || params[:product][:cover_image].blank? || (params[:product][:cover_image].respond_to?(:blank?) && params[:product][:cover_image].blank?)
       update_params.delete(:cover_image)
     end
 
-    # Treat preview_images as blank if param is missing, empty, or contains only blank entries
     if params[:product].blank? || params[:product][:preview_images].blank? || (params[:product][:preview_images].respond_to?(:all?) && params[:product][:preview_images].all? { |v| v.blank? })
       update_params.delete(:preview_images)
     end
 
-    # Attach any uploaded files (these will be appended to existing attachments)
     if params[:product].present? && params[:product][:cover_image].present?
       @product.cover_image.attach(params[:product][:cover_image])
     end
 
     if params[:product].present? && params[:product][:preview_images].present? && !(params[:product][:preview_images].respond_to?(:all?) && params[:product][:preview_images].all? { |v| v.blank? })
-      # Enforce max 5 preview images total (existing + new)
       existing_count = @product.preview_images.count
       new_files = Array(params[:product][:preview_images]).reject { |f| f.blank? }
       if existing_count + new_files.size > 5
@@ -112,11 +86,14 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1 or /products/1.json
   def destroy
-    @product.destroy!
-
     respond_to do |format|
-      format.html { redirect_to products_path, notice: "Product was successfully destroyed.", status: :see_other }
-      format.turbo_stream
+      if @product.destroy
+        format.html { redirect_to products_path, notice: "Product #{@product.name} was successfully deleted.", status: :see_other }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to products_path, alert: "Cannot delete — products still reference this Product.", status: :see_other }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -141,11 +118,13 @@ class ProductsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])
     end
 
+    def set_categories
+      @categories = Category.pluck(:id,:name)
+    end
     # Only allow a list of trusted parameters through.
     def product_params
       params.require(:product).permit(:name, :sku, :description, :status_product, :quantity, :price, :category_id, :unit_of_measurement_id, :cover_image, preview_images: [])

@@ -20,6 +20,15 @@ class Product < ApplicationRecord
     ["category","unit_of_measurement"]
   end
 
+  def category_name
+    category&.name
+  end
+
+  def unit_of_measurement_name
+    unit_of_measurement&.name
+  end
+
+
   def preview_images_limit
     if preview_images.attachments.count > 5
       errors.add(:preview_images, "cannot be more than 5 images")
