@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :provinces
   devise_for :users, controllers: { sessions: 'users/sessions' }
   root to: "dashboards#index"
   
