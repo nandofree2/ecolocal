@@ -9,7 +9,7 @@ set :branch, "main"
 set :deploy_to, "/var/www/ecolocal"
 
 set :rbenv_type, :user
-set :rbenv_ruby, "3.2.2"
+set :rbenv_ruby, "3.1.2"
 
 
 append :linked_files, "config/database.yml", "config/master.key"
