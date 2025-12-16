@@ -4,11 +4,13 @@ lock "~> 3.20.0"
 
 set :application, "ecolocal"
 set :repo_url, "git@github.com:nandofree2/ecolocal.git"
+set :branch, "main"
 
 set :deploy_to, "/var/www/ecolocal"
 
 set :rbenv_type, :user
 set :rbenv_ruby, "3.2.2"
+
 
 append :linked_files, "config/database.yml", "config/master.key"
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
