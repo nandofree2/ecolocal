@@ -20,18 +20,20 @@
 # Any libraries that use a connection pool or another resource pool should
 # be configured to provide at least as many connections as the number of
 # threads. This includes Active Record's `pool` parameter in `database.yml`.
-environment "production"
+max_threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
+min_threads_count = max_threads_count
+threads min_threads_count, max_threads_count
+
+environment ENV.fetch("RAILS_ENV", "production")
 
 bind "unix:///var/www/ecolocal/shared/tmp/sockets/puma.sock"
 
 pidfile "/var/www/ecolocal/shared/tmp/pids/puma.pid"
 state_path "/var/www/ecolocal/shared/tmp/pids/puma.state"
 
-threads 3, 3
-workers 1
+workers ENV.fetch("WEB_CONCURRENCY", 1)
 preload_app!
 
-daemonize true
-
 plugin :tmp_restart
+
 
