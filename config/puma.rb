@@ -27,11 +27,11 @@ bind "unix:///var/www/ecolocal/shared/tmp/sockets/puma.sock"
 pidfile "/var/www/ecolocal/shared/tmp/pids/puma.pid"
 state_path "/var/www/ecolocal/shared/tmp/pids/puma.state"
 
-threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
-threads threads_count, threads_count
-
+threads 3, 3
 workers 1
 preload_app!
+
+daemonize true
 
 plugin :tmp_restart
 
