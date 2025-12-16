@@ -18,7 +18,10 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/syst
 set :puma_bind, "unix:///var/www/ecolocal/shared/tmp/sockets/puma.sock"
 set :puma_state, "/var/www/ecolocal/shared/tmp/pids/puma.state"
 set :puma_pid, "/var/www/ecolocal/shared/tmp/pids/puma.pid"
-
+set :puma_env, fetch(:rails_env, "production")
+set :puma_preload_app, true
+set :puma_workers, 1
+set :puma_threads, [3, 3]
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 

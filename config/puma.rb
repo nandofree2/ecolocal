@@ -34,6 +34,9 @@ state_path "/var/www/ecolocal/shared/tmp/pids/puma.state"
 workers ENV.fetch("WEB_CONCURRENCY", 1)
 preload_app!
 
+# Redirect STDOUT and STDERR to shared log files so we can inspect Puma errors
+stdout_redirect "/var/www/ecolocal/shared/log/puma.stdout.log", "/var/www/ecolocal/shared/log/puma.stderr.log", true
+
 plugin :tmp_restart
 
 
