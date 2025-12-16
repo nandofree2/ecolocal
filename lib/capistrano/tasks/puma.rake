@@ -1,6 +1,6 @@
 namespace :puma do
   desc "Ensure puma shared directories exist (sockets, pids)"
-  task :make_dirs do
+  task puma:make_dirs do
     on roles(:app) do
       shared_tmp = File.join(shared_path, 'tmp')
       sockets = File.join(shared_tmp, 'sockets')
