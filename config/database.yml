@@ -18,7 +18,9 @@ test:
   database: ecolocal_test
 
 production:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
   database: ecolocal_production
-  username: ecolocal
-  password: <%= ENV["ECOLOCAL_DATABASE_PASSWORD"] %>
+  username: deploy
+  password: 12341234
+  host: localhost
