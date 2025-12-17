@@ -12,7 +12,7 @@ set :rbenv_type, :user
 set :rbenv_ruby, "3.1.2"
 
 
-append :linked_files, "config/database.yml", "config/master.key"
+append :linked_files, "config/database.yml", "config/master.key", "config/credentials.yml.enc"
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
 
 set :puma_bind, "unix:///var/www/ecolocal/shared/tmp/sockets/puma.sock"
