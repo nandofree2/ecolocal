@@ -8,6 +8,7 @@ environment ENV.fetch("RAILS_ENV", "development")
 
 workers ENV.fetch("WEB_CONCURRENCY", 1)
 preload_app!
+stdout_redirect "/var/www/ecolocal/shared/log/puma.stdout.log", "/var/www/ecolocal/shared/log/puma.stderr.log", true
 
 if ENV["RAILS_ENV"] == "production"
   bind "unix:///var/www/ecolocal/shared/tmp/sockets/puma.sock"
