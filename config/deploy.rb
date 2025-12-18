@@ -12,7 +12,9 @@ set :rbenv_type, :user
 set :rbenv_ruby, "3.1.2"
 
 
-append :linked_files, "config/database.yml", "config/master.key", "config/credentials.yml.enc"
+# append :linked_files, "config/database.yml", "config/master.key", "config/credentials.yml.enc"
+append :linked_files, "config/database.yml", "config/master.key"
+
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/assets"
 
 set :rails_env, "production"

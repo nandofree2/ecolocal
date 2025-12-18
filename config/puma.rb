@@ -1,12 +1,13 @@
 # config/puma.rb
 
-max_threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
-min_threads_count = max_threads_count
-threads min_threads_count, max_threads_count
+threads 2, 2
 
 environment ENV.fetch("RAILS_ENV", "development")
 
-workers ENV.fetch("WEB_CONCURRENCY", 1)
+workers 0
+
+silence_single_worker_warning
+
 preload_app!
 stdout_redirect "/var/www/ecolocal/shared/log/puma.stdout.log", "/var/www/ecolocal/shared/log/puma.stderr.log", true
 

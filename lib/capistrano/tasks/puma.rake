@@ -14,7 +14,7 @@ namespace :puma do
     end
   end
 
-  before :start, :make_dirs
-  before :restart, :make_dirs
-  before 'deploy:starting', :make_dirs
+  before 'puma:start', 'puma:make_dirs'
+  before 'puma:restart', 'puma:make_dirs'
+  before 'deploy:starting', 'puma:make_dirs'
 end
