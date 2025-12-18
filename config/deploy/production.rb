@@ -13,7 +13,7 @@ server "202.10.34.68", user: "deploy", roles: %w[app web db]
 
 set :default_env, {
   'RAILS_ENV' => 'production',
-  'RAILS_MASTER_KEY' => 'b5e2a7b95675430db48409e036b76c466e34be04bbe6558babaa8d3e1ee88ac7d99249d890993bf04bc2d98dd18da848ef6df47532770399cb8b2cc575c95bb0'
+  'RAILS_MASTER_KEY' => '7010959287ad9fac2b98b1d329d99148'
 }
 
 

@@ -13,6 +13,7 @@ stdout_redirect "/var/www/ecolocal/shared/log/puma.stdout.log", "/var/www/ecoloc
 
 if ENV["RAILS_ENV"] == "production"
   bind "unix:///var/www/ecolocal/shared/tmp/sockets/puma.sock"
+  chmod_socket = 0660
 
   pidfile "/var/www/ecolocal/shared/tmp/pids/puma.pid"
   state_path "/var/www/ecolocal/shared/tmp/pids/puma.state"
