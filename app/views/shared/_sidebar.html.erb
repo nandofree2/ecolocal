@@ -87,6 +87,16 @@
                 </li>
               <% end %>
             </ul>
+            <ul class="nav nav-treeview">
+              <% if can?(:read, City) %>
+                <li class="nav-item">
+                  <a href="<%= cities_path %>" class="nav-link <%= 'active' if controller_name == 'cities' %>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>City</p>
+                  </a>
+                </li>
+              <% end %>
+            </ul>
           </li>
         <% end %>
         
