@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
+  root to: "dashboards#index"
+  resources :cities
   resources :provinces
   devise_for :users, controllers: { sessions: 'users/sessions' }
-  root to: "dashboards#index"
   
   resources :roles
   resources :users

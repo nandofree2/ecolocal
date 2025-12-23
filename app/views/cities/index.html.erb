@@ -1,0 +1,43 @@
+<% content_for :page_title, "City" %>
+
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <div class="card-tools">
+      <%= link_to "New City", new_city_path, class: "btn btn-sm btn-primary" %>
+    </div>
+  </div>
+
+  <div class="card-body table-responsive p-0">
+    <table class="table table-hover text-nowrap mb-0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Province</th>
+          <th>Sku</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cities.each do |city| %>
+          <tr>
+            <td><%= city.name %></td>
+            <td><%= city.province.name %></td>
+            <td><%= city.sku %></td>
+            <td><%= city.description %></td>
+            <td>
+              <%= link_to "Edit", edit_city_path(city), class: "btn btn-sm btn-outline-primary" %>
+              <%= button_to "Delete",city_path(city),method: :delete, form: { class: "d-inline" },class: "btn btn-sm btn-outline-danger city-show-delete-modal",data: {
+                url: city_path(city),
+                name: city.name,
+                sku: city.sku
+              }%>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="mt-3 d-flex justify-content-center">
+      <%= paginate @cities %>
+    </div>
+  </div>
+</div>

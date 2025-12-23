@@ -122,3 +122,65 @@ end
 
 puts "Seeder: #{Province.count} provinces loaded."
 
+cities = [
+  { province: "Aceh", name: "Kota Banda Aceh", sku: "BDA" },
+  { province: "Aceh", name: "Kota Sabang", sku: "SBG" },
+  { province: "Aceh", name: "Kabupaten Aceh Besar", sku: "ABR" },
+  { province: "Sumatera Utara", name: "Kota Medan", sku: "MDN" },
+  { province: "Sumatera Utara", name: "Kota Binjai", sku: "BNJ" },
+  { province: "Sumatera Utara", name: "Kabupaten Deli Serdang", sku: "DLS" },
+  { province: "Sumatera Barat", name: "Kota Padang", sku: "PDG" },
+  { province: "Sumatera Barat", name: "Kota Bukittinggi", sku: "BKT" },
+  { province: "Riau", name: "Kota Pekanbaru", sku: "PKU" },
+  { province: "Riau", name: "Kabupaten Kampar", sku: "KPR" },
+  { province: "Kepulauan Riau", name: "Kota Batam", sku: "BTM" },
+  { province: "Kepulauan Riau", name: "Kota Tanjung Pinang", sku: "TJP" },
+  { province: "Jambi", name: "Kota Jambi", sku: "JMB" },
+  { province: "Jambi", name: "Kabupaten Muaro Jambi", sku: "MRJ" },
+  { province: "Sumatera Selatan", name: "Kota Palembang", sku: "PLB" },
+  { province: "Sumatera Selatan", name: "Kabupaten Banyuasin", sku: "BNY" },
+  { province: "Bangka Belitung", name: "Kota Pangkal Pinang", sku: "PKP" },
+  { province: "Bangka Belitung", name: "Kabupaten Bangka", sku: "BNG" },
+  { province: "Bengkulu", name: "Kota Bengkulu", sku: "BGL" },
+  { province: "Lampung", name: "Kota Bandar Lampung", sku: "BDL" },
+  { province: "Lampung", name: "Kabupaten Lampung Selatan", sku: "LPS" },
+  { province: "DKI Jakarta", name: "Kota Jakarta Pusat", sku: "JP" },
+  { province: "DKI Jakarta", name: "Kota Jakarta Selatan", sku: "JS" },
+  { province: "DKI Jakarta", name: "Kota Jakarta Barat", sku: "JB" },
+  { province: "Banten", name: "Kota Serang", sku: "SRG" },
+  { province: "Banten", name: "Kota Tangerang", sku: "TNG" },
+  { province: "Jawa Barat", name: "Kota Bandung", sku: "BDG" },
+  { province: "Jawa Barat", name: "Kota Bekasi", sku: "BKS" },
+  { province: "Jawa Barat", name: "Kabupaten Bogor", sku: "BGR" },
+  { province: "Jawa Tengah", name: "Kota Semarang", sku: "SMG" },
+  { province: "Jawa Tengah", name: "Kota Surakarta", sku: "SLO" },
+  { province: "DI Yogyakarta", name: "Kota Yogyakarta", sku: "YGY" },
+  { province: "DI Yogyakarta", name: "Kabupaten Sleman", sku: "SLM" },
+  { province: "Jawa Timur", name: "Kota Surabaya", sku: "SBY" },
+  { province: "Jawa Timur", name: "Kota Malang", sku: "MLG" },
+  { province: "Jawa Timur", name: "Kabupaten Sidoarjo", sku: "SDA" },
+  { province: "Bali", name: "Kota Denpasar", sku: "DPS" },
+  { province: "Bali", name: "Kabupaten Badung", sku: "BDG" },
+  { province: "Nusa Tenggara Barat", name: "Kota Mataram", sku: "MTR" },
+  { province: "Nusa Tenggara Timur", name: "Kota Kupang", sku: "KPG" },
+  { province: "Kalimantan Timur", name: "Kota Samarinda", sku: "SMD" },
+  { province: "Kalimantan Timur", name: "Kota Balikpapan", sku: "BPP" },
+  { province: "Sulawesi Selatan", name: "Kota Makassar", sku: "MKS" },
+  { province: "Maluku", name: "Kota Ambon", sku: "AMN" },
+  { province: "Papua", name: "Kota Jayapura", sku: "JPR" },
+  { province: "Papua Barat", name: "Kota Manokwari", sku: "MKW" }
+]
+
+cities.each do |city|
+  province = Province.find_by!(name: city[:province])
+
+  City.find_or_create_by!(
+    name: city[:name],
+    province_id: province.id
+  ) do |c|
+    c.sku = city[:sku]
+    c.description = "Kota/Kabupaten #{city[:name]} di Provinsi #{province.name}"
+  end
+end
+
+puts "Seeder cities completed: #{City.count} cities loaded."

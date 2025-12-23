@@ -9,9 +9,9 @@ workers 0
 silence_single_worker_warning
 
 preload_app!
-stdout_redirect "/var/www/ecolocal/shared/log/puma.stdout.log", "/var/www/ecolocal/shared/log/puma.stderr.log", true
 
 if ENV["RAILS_ENV"] == "production"
+  stdout_redirect "/var/www/ecolocal/shared/log/puma.stdout.log", "/var/www/ecolocal/shared/log/puma.stderr.log", true
   bind "unix:///var/www/ecolocal/shared/tmp/sockets/puma.sock"
   chmod_socket = 0660
 
