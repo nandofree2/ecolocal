@@ -27,6 +27,8 @@ class CitiesController < ApplicationController
   # POST /cities or /cities.json
   def create
     @city = City.new(city_params)
+    @provinces = Province.select(:name, :id).order(:name)
+
 
     respond_to do |format|
       if @city.save
