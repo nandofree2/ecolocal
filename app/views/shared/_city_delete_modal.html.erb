@@ -1,0 +1,30 @@
+
+  <div class="modal fade" id="city-deleteConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title">Confirm Delete</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body fade-item">
+          Are you sure you want to delete
+          <strong id="city-delete-item-name" class="text-danger"></strong>?
+          <br>
+          <small class="text-muted">SKU: <span id="city-delete-item-sku"></span></small>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+          <form id="city-deleteConfirmForm" method="post">
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>

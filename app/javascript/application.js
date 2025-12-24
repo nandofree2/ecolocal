@@ -7,4 +7,4 @@ import "./product_image"
 import "./product_galery"
 import "./product_delete_modal"
 import "./province_delete_modal"
-
+import "./city_delete_modal"

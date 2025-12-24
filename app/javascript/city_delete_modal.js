@@ -1,15 +1,15 @@
 document.addEventListener("turbo:load", () => {
-  const modalElement = document.getElementById("product-deleteConfirmModal");
-  const deleteForm = document.getElementById("product-deleteConfirmForm");
-  const itemNameElement = document.getElementById("product-delete-item-name");
-  const itemSkuElement = document.getElementById("product-delete-item-sku");
+  const modalElement = document.getElementById("city-deleteConfirmModal");
+  const deleteForm = document.getElementById("city-deleteConfirmForm");
+  const itemNameElement = document.getElementById("city-delete-item-name");
+  const itemSkuElement = document.getElementById("city-delete-item-sku");
   const fadeItem = document.querySelector(".fade-item");
 
   if (!modalElement || !deleteForm || !itemNameElement || !itemSkuElement) return;
 
   const modal = new bootstrap.Modal(modalElement);
 
-  document.querySelectorAll(".product-show-delete-modal").forEach((button) => {
+  document.querySelectorAll(".city-show-delete-modal").forEach((button) => {
     button.addEventListener("click", (event) => {
       event.preventDefault();
 
