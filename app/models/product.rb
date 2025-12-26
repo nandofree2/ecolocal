@@ -2,22 +2,22 @@ class Product < ApplicationRecord
   belongs_to :category
   belongs_to :unit_of_measurement
   has_one_attached :cover_image
-  has_many_attached :preview_images 
+  has_many_attached :preview_images
 
-  validates_presence_of :name, :price
+  validates_presence_of :name
   validate :preview_images_limit
 
-  enum status_product: {unreleased: 0,expired: 1,active: 2,deactive: 3}
+  enum status_product: { unreleased: 0, expired: 1, active: 2, deactive: 3 }
 
   before_save :set_sku_product
 
 
   def self.ransackable_attributes(auth_object = nil)
-    ["name","sku","status_product","price","category_id","unit_of_measurement_id","created_at","updated_at"]
+    [ "name", "sku", "status_product", "category_id", "unit_of_measurement_id", "created_at", "updated_at" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["category","unit_of_measurement"]
+    [ "category", "unit_of_measurement" ]
   end
 
   def category_name

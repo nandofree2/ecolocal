@@ -18,9 +18,7 @@
           <%= f.label :s, "Sort by", class: "form-label" %>
           <%= f.select :s, [
               ['Newest First', 'created_at desc'],
-              ['Oldest First', 'created_at asc'],
-              ['Price Low → High', 'price asc'],
-              ['Price High → Low', 'price desc']
+              ['Oldest First', 'created_at asc']
             ],
             { include_blank: "Select..." },
             class: "form-select" %>
@@ -45,8 +43,7 @@
           <th><%= sort_link @q, :sku, "SKU" %></th>
           <th><%= sort_link @q, :category_name, "Category" %></th>
           <th><%= sort_link @q, :unit_of_measurement_name, "UOM" %></th>
-          <th><%= sort_link @q, :price, "Price" %></th>
-          <th class="text-end">Actions</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -56,15 +53,20 @@
             <td><%= product.sku %></td>
             <td><%= product.category.name %></td>
             <td><%= product.unit_of_measurement.name %></td>
-            <td><%= number_to_currency(product.price) %></td>
             <td>
-              <%= link_to "Show", product_path(product), class: "btn btn-sm btn-outline-secondary" %>
-              <%= link_to "Edit", edit_product_path(product), class: "btn btn-sm btn-outline-primary" %>
-              <%= button_to "Delete",product_path(product),method: :delete, form: { class: "d-inline" },class: "btn btn-sm btn-outline-danger product-show-delete-modal",data: {
+              <%= link_to product_path(product), class: "btn btn-sm btn-info", title: "Show" do %>
+                <i class="fas fa-eye"></i>
+              <% end %>
+              <%= link_to edit_product_path(product), class: "btn btn-sm btn-warning", title: "Edit" do %>
+                <i class="fas fa-pencil-alt"></i>
+              <% end %>
+              <%= button_to product_path(product), method: :delete, form: { class: "d-inline" }, class: "btn btn-sm btn-danger product-show-delete-modal", title: "Delete", data: {
                 url: product_path(product),
                 name: product.name,
                 sku: product.sku
-              }%>
+              } do %>
+                <i class="fas fa-trash"></i>
+              <% end %>
             </td>
           </tr>
         <% end %>

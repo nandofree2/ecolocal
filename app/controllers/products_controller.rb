@@ -21,12 +21,12 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
-    @unit_of_measurements = UnitOfMeasurement.pluck(:id,:name)
+    @unit_of_measurements = UnitOfMeasurement.pluck(:id, :name)
   end
 
   # GET /products/1/edit
   def edit
-    @unit_of_measurements = UnitOfMeasurement.pluck(:id,:name)
+    @unit_of_measurements = UnitOfMeasurement.pluck(:id, :name)
   end
 
   # POST /products or /products.json
@@ -65,8 +65,8 @@ class ProductsController < ApplicationController
       new_files = Array(params[:product][:preview_images]).reject { |f| f.blank? }
       if existing_count + new_files.size > 5
         flash.now[:alert] = "You can attach up to 5 preview images (you currently have "+existing_count.to_s+")."
-        @categories = Category.pluck(:id,:name)
-        @unit_of_measurements = UnitOfMeasurement.pluck(:id,:name)
+        @categories = Category.pluck(:id, :name)
+        @unit_of_measurements = UnitOfMeasurement.pluck(:id, :name)
         return render :edit, status: :unprocessable_entity
       end
 
@@ -123,10 +123,10 @@ class ProductsController < ApplicationController
     end
 
     def set_categories
-      @categories = Category.pluck(:id,:name)
+      @categories = Category.pluck(:id, :name)
     end
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:name, :sku, :description, :status_product, :quantity, :price, :category_id, :unit_of_measurement_id, :cover_image, preview_images: [])
+      params.require(:product).permit(:name, :sku, :description, :status_product, :category_id, :unit_of_measurement_id, :cover_image, preview_images: [])
     end
 end
