@@ -3,7 +3,9 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between align-items-center">
     <div class="card-tools">
-      <%= link_to "New City", new_city_path, class: "btn btn-sm btn-primary" %>
+      <%= link_to new_city_path, class: "btn btn-sm btn-primary" do %>
+        <i class="fas fa-plus"></i> New City
+      <% end %>
     </div>
   </div>
 
@@ -24,13 +26,17 @@
             <td><%= city.province.name %></td>
             <td><%= city.sku %></td>
             <td><%= city.description %></td>
-            <td>
-              <%= link_to "Edit", edit_city_path(city), class: "btn btn-sm btn-outline-primary" %>
-              <%= button_to "Delete",city_path(city),method: :delete, form: { class: "d-inline" },class: "btn btn-sm btn-outline-danger city-show-delete-modal",data: {
+            <td class="text-right">
+              <%= link_to edit_city_path(city), class: "btn btn-sm btn-warning", title: "Edit" do %>
+                <i class="fas fa-pencil-alt"></i>
+              <% end %>
+              <%= button_to city_path(city), method: :delete, form: { class: "d-inline" }, class: "btn btn-sm btn-danger city-show-delete-modal", title: "Delete", data: {
                 url: city_path(city),
                 name: city.name,
                 sku: city.sku
-              }%>
+              } do %>
+                <i class="fas fa-trash"></i>
+              <% end %>
             </td>
           </tr>
         <% end %>

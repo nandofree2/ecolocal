@@ -4,7 +4,9 @@
   <div class="card-header">
     <h3 class="card-title">Users List</h3>
     <div class="card-tools">
-      <%= link_to "Add New User", new_user_path, class: "btn btn-primary btn-sm" %>
+      <%= link_to new_user_path, class: "btn btn-primary btn-sm" do %>
+         <i class="fas fa-plus"></i> Add New User
+      <% end %>
     </div>
   </div>
   <div class="card-body">
@@ -27,9 +29,15 @@
               <td><%= user.email %></td>
               <td><span class="badge badge-info"><%= user.role&.name || "No Role" %></span></td>
               <td>
-                <%= link_to "View", user_path(user), class: "btn btn-info btn-xs" %>
-                <%= link_to "Edit", edit_user_path(user), class: "btn btn-warning btn-xs" %>
-                <%= link_to "Delete", user_path(user), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-xs" %>
+                <%= link_to user_path(user), class: "btn btn-info btn-xs", title: "View" do %>
+                   <i class="fas fa-eye"></i>
+                <% end %>
+                <%= link_to edit_user_path(user), class: "btn btn-warning btn-xs", title: "Edit" do %>
+                   <i class="fas fa-pencil-alt"></i>
+                <% end %>
+                <%= link_to user_path(user), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-xs", title: "Delete" do %>
+                   <i class="fas fa-trash"></i>
+                <% end %>
               </td>
             </tr>
           <% end %>

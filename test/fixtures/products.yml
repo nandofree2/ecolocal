@@ -5,13 +5,9 @@ one:
   sku: MyString
   description: MyText
   status: MyString
-  quantity: 1
-  price: 9.99
 
 two:
   name: MyString
   sku: MyString
   description: MyText
   status: MyString
-  quantity: 1
-  price: 9.99
