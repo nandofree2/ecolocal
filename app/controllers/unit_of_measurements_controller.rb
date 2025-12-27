@@ -3,7 +3,11 @@ class UnitOfMeasurementsController < ApplicationController
   authorize_resource
 
   def index
-    @unit_of_measurements = UnitOfMeasurement.all
+    @q = UnitOfMeasurement.ransack(params[:q])
+    @unit_of_measurements = @q.result
+                  .order(created_at: :desc)
+                  .page(params[:page])
+                  .per(20)
   end
 
   def show

@@ -1,28 +1,41 @@
 <% content_for :page_title, "Unit Of Measurement" %>
 
 <div class="card">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <h3 class="card-title">Units of Measurement</h3>
-    <div class="card-tools">
-      <%= link_to new_unit_of_measurement_path, class: "btn btn-sm btn-primary" do %>
-        <i class="fas fa-plus"></i> New UOM
-      <% end %>
-    </div>
+  <div class="card-header ">
+      <div class="mb-4">
+
+        <%= search_form_for @q, url: unit_of_measurements_path, method: :get, html: { class: "row g-2 align-items-end" } do |f| %>
+          <div class="col-md-1">
+            <%= f.label :name_or_sku_cont, "Search", class: "form-label" %>
+            <%= f.search_field :name_or_sku_cont, placeholder: "name or sku...", class: "form-control" %>
+          </div>
+
+          <div class="col-md-2">
+            <%= f.submit "Search", class: "btn btn-primary" %>
+          </div>
+          <div class="col-md-2">
+            <%= link_to new_unit_of_measurement_path, class: "btn btn-sm btn-primary" do %>
+              <i class="fas fa-plus"></i> New Category
+            <% end %>
+          </div>
+        <% end %>
+      </div>
   </div>
 
   <div class="card-body table-responsive p-0">
     <table class="table table-hover text-nowrap mb-0">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>SKU</th>
-          <th>Quantity</th>
-          <th></th>
+          <th>#</th>
+          <th><%= sort_link @q, :name, "Name" %></th>
+          <th><%= sort_link @q, :sku, "SKU" %></th>
+          <th>Description</th>
         </tr>
       </thead>
       <tbody>
-        <% @unit_of_measurements.each do |uom| %>
+        <% @unit_of_measurements.each_with_index do |uom, index| %>
           <tr>
+            <td><%= (@unit_of_measurements.current_page - 1) * @unit_of_measurements.limit_value + index + 1 %></td>
             <td><%= uom.name %></td>
             <td><%= uom.sku %></td>
             <td><%= uom.quantity %></td>
