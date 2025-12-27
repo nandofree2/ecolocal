@@ -1,10 +1,10 @@
 <% provide :page_title, "Edit Role" %>
 
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-12">
     <div class="card card-primary">
       <div class="card-header">
-        <h3 class="card-title">Edit Role</h3>
+        <h3 class="card-title">Edit Role: <%= @role.name %></h3>
       </div>
       
       <%= form_with(model: @role, local: true, class: "form") do |form| %>
@@ -23,13 +23,165 @@
         <% end %>
 
         <div class="card-body">
-          <div class="form-group">
-            <%= form.label :name %>
-            <%= form.text_field :name, class: "form-control", placeholder: "Enter role name" %>
+          <!-- Basic Info -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= form.label :name %>
+                <%= form.text_field :name, class: "form-control", placeholder: "Enter role name" %>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= form.label :description %>
+                <%= form.text_area :description, rows: 3, class: "form-control", placeholder: "Describe the role and its permissions" %>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <%= form.label :description %>
-            <%= form.text_area :description, rows: 5, class: "form-control", placeholder: "Describe the role and its permissions" %>
+
+          <hr class="my-4">
+
+          <!-- Menu Visibility Section -->
+          <h5 class="mb-3"><i class="fas fa-bars mr-2"></i>Menu Visibility</h5>
+          <p class="text-muted small mb-3">Control which menu groups are visible for this role.</p>
+          
+          <div class="row mb-4">
+            <div class="col-md-12">
+              <div class="card card-outline card-secondary">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-sm table-bordered mb-0">
+                      <thead class="bg-light">
+                        <tr>
+                          <th style="width: 200px;">Menu</th>
+                          <th class="text-center">Visible</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% 
+                          menus = [
+                            { key: 'menu_product', label: 'Product Menu', icon: 'fa-box', desc: 'Product, Category, UOM submenu' },
+                            { key: 'menu_zone', label: 'Zone Menu', icon: 'fa-map-marker-alt', desc: 'Province, City submenu' },
+                            { key: 'menu_access_control', label: 'Access Control', icon: 'fa-users-cog', desc: 'Roles, Users management (Admin only by default)' }
+                          ]
+                        %>
+                        <% menus.each do |menu| %>
+                          <tr>
+                            <td>
+                              <i class="fas <%= menu[:icon] %> mr-2 text-muted"></i>
+                              <%= menu[:label] %>
+                            </td>
+                            <td class="text-center">
+                              <div class="custom-control custom-switch">
+                                <%= check_box_tag "role[permissions][#{menu[:key]}][]", 'visible', 
+                                    @role.permissions_hash.fetch(menu[:key], []).include?('visible'),
+                                    id: "menu_#{menu[:key]}", 
+                                    class: 'custom-control-input' %>
+                                <label class="custom-control-label" for="menu_<%= menu[:key] %>"></label>
+                              </div>
+                            </td>
+                            <td class="text-muted small"><%= menu[:desc] %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+          <h5 class="mb-3"><i class="fas fa-shield-alt mr-2"></i>Resource Permissions</h5>
+          <p class="text-muted small mb-3">Toggle CRUD actions for each resource.</p>
+
+          <div class="card card-outline card-secondary">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover mb-0 permission-matrix">
+                  <thead class="bg-light">
+                    <tr>
+                      <th style="width: 180px;">Resource</th>
+                      <th class="text-center" style="width: 80px;">Show</th>
+                      <th class="text-center" style="width: 80px;">Read</th>
+                      <th class="text-center" style="width: 80px;">Create</th>
+                      <th class="text-center" style="width: 80px;">Edit</th>
+                      <th class="text-center" style="width: 80px;">Delete</th>
+                      <th class="text-center" style="width: 100px;">
+                        <span class="text-primary">All</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% 
+                      resources = [
+                        { key: 'Product', label: 'Products', icon: 'fa-box' },
+                        { key: 'Category', label: 'Categories', icon: 'fa-tags' },
+                        { key: 'UnitOfMeasurement', label: 'Unit of Measurement', icon: 'fa-ruler' },
+                        { key: 'Province', label: 'Provinces', icon: 'fa-map' },
+                        { key: 'City', label: 'Cities', icon: 'fa-city' },
+                        { key: 'User', label: 'Users', icon: 'fa-users' },
+                        { key: 'Role', label: 'Roles', icon: 'fa-user-tag' }
+                      ]
+                      actions = ['show', 'read', 'create', 'edit', 'delete']
+                    %>
+                    <% resources.each do |resource| %>
+                      <tr data-resource="<%= resource[:key] %>">
+                        <td>
+                          <i class="fas <%= resource[:icon] %> mr-2 text-muted"></i>
+                          <strong><%= resource[:label] %></strong>
+                        </td>
+                        <%= hidden_field_tag "role[permissions][#{resource[:key]}][]", "" %>
+                        <% actions.each do |action| %>
+                          <td class="text-center">
+                            <div class="custom-control custom-checkbox">
+                              <%= check_box_tag "role[permissions][#{resource[:key]}][]", 
+                                  action, 
+                                  @role.permissions_hash.fetch(resource[:key], []).include?(action),
+                                  id: "role_#{resource[:key]}_#{action}",
+                                  class: 'custom-control-input permission-checkbox',
+                                  data: { resource: resource[:key], action: action } %>
+                              <label class="custom-control-label" for="role_<%= resource[:key] %>_<%= action %>"></label>
+                            </div>
+                          </td>
+                        <% end %>
+                        <td class="text-center">
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" 
+                                   class="custom-control-input select-all-row" 
+                                   id="role_<%= resource[:key] %>_all"
+                                   data-resource="<%= resource[:key] %>">
+                            <label class="custom-control-label" for="role_<%= resource[:key] %>_all"></label>
+                          </div>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                  <tfoot class="bg-light">
+                    <tr>
+                      <th class="text-right">Select Column:</th>
+                      <% actions.each do |action| %>
+                        <th class="text-center">
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" 
+                                   class="custom-control-input select-all-column" 
+                                   id="col_<%= action %>"
+                                   data-action="<%= action %>">
+                            <label class="custom-control-label" for="col_<%= action %>"></label>
+                          </div>
+                        </th>
+                      <% end %>
+                      <th class="text-center">
+                        <button type="button" class="btn btn-xs btn-outline-primary" id="select-all-permissions">
+                          <i class="fas fa-check-double"></i>
+                        </button>
+                      </th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
 

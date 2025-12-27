@@ -35,25 +35,25 @@ puts "📧 Test Admin account: admin@test.com / 12341234"
 puts "📧 Test manager account: manager@test.com / 12341234"
 
 unless Category.exists?(1)
-  Category.create!(id: 1, name: "T-shirt", sku: "TS")
-  Category.create!(id: 2, name: "Jeans", sku: "JN")
-  Category.create!(id: 3, name: "Sweater", sku: "SW")
-  Category.create!(id: 4, name: "accessories", sku: "AC")
-  Category.create!(id: 5, name: "dresses", sku: "DR")
+  Category.find_or_create_by!(id: 1, name: "T-shirt", sku: "TS")
+  Category.find_or_create_by!(id: 2, name: "Jeans", sku: "JN")
+  Category.find_or_create_by!(id: 3, name: "Sweater", sku: "SW")
+  Category.find_or_create_by!(id: 4, name: "accessories", sku: "AC")
+  Category.find_or_create_by!(id: 5, name: "dresses", sku: "DR")
 end
 
 puts "✅ Created Categories"
 
 unless UnitOfMeasurement.exists?(1)
-  UnitOfMeasurement.create!(id: 1, name: "PCS", sku: "PC", quantity:1)
-  UnitOfMeasurement.create!(id: 2, name: "Lusin", sku: "LS", quantity:12)
-  UnitOfMeasurement.create!(id: 3, name: "Box", sku: "BX", quantity:20)
-  UnitOfMeasurement.create!(id: 4, name: "Gross", sku: "GR", quantity:144)
+  UnitOfMeasurement.find_or_create_by!(id: 1, name: "PCS", sku: "PC", quantity:1)
+  UnitOfMeasurement.find_or_create_by!(id: 2, name: "Lusin", sku: "LS", quantity:12)
+  UnitOfMeasurement.find_or_create_by!(id: 3, name: "Box", sku: "BX", quantity:20)
+  UnitOfMeasurement.find_or_create_by!(id: 4, name: "Gross", sku: "GR", quantity:144)
 end
 puts "✅ Created Unit of Measurements"
 
 100.times do
-  Product.create!(
+  Product.find_or_create_by!(
     name: Faker::Commerce.product_name,
     sku: rand(10000..99999).to_s,
     description: Faker::Lorem.sentence(word_count: 5),

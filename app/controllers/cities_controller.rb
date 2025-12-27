@@ -17,11 +17,12 @@ class CitiesController < ApplicationController
   # GET /cities/new
   def new
     @city = City.new
-    @provinces = Province.select(:name, :id)
+    @provinces = Province.select(:name, :id).order(:name)
   end
 
   # GET /cities/1/edit
   def edit
+    @provinces = Province.select(:name, :id).order(:name)
   end
 
   # POST /cities or /cities.json
@@ -45,8 +46,8 @@ class CitiesController < ApplicationController
   def update
     respond_to do |format|
       if @city.update(city_params)
-        format.html { redirect_to @city, notice: "City was successfully updated.", status: :see_other }
-        format.json { render :show, status: :ok, location: @city }
+        format.html { redirect_to cities_path, notice: "City was successfully updated.", status: :see_other }
+        format.json { redirect_to cities_path, status: :ok, location: @city }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @city.errors, status: :unprocessable_entity }

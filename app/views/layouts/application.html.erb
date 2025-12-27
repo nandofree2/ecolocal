@@ -41,13 +41,13 @@
 
       <section class="content">
         <div class="container-fluid">
-          <% flash.each do |k,v| %>
-            <div class="alert alert-<%= k == "notice" ? "success" : "danger" %> alert-dismissible">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <% flash.each do |k, v| %>
+            <div class="alert flash-alert <%= k == 'notice' ? 'flash-notice' : 'flash-alert-error' %> alert-dismissible fade show"role="alert"data-autoclose="true">
+              <i class="fas <%= k == 'notice' ? 'fa-check-circle' : 'fa-exclamation-circle' %> me-2"></i>
               <%= v %>
+              <button type="button"class="btn-close"data-bs-dismiss="alert"aria-label="Close"></button>
             </div>
           <% end %>
-
           <%= yield %>
         </div>
       </section>
@@ -70,6 +70,39 @@
   <% if !user_signed_in? %>
     <%= render "shared/login_modal" %>
   <% end %>
+
+    <script>
+      // Auto-dismiss bootstrap alerts that have data-autoclose="true"
+      (function() {
+        function autoCloseAlerts() {
+          try {
+            const els = document.querySelectorAll('.alert[data-autoclose="true"]');
+            els.forEach(el => {
+              // Wait a short moment (3s) then close via Bootstrap's Alert API if available
+              setTimeout(() => {
+                try {
+                  if (window.bootstrap && bootstrap.Alert) {
+                    new bootstrap.Alert(el).close();
+                  } else {
+                    // fallback: remove element gracefully
+                    el.classList.remove('show');
+                    el.style.display = 'none';
+                  }
+                } catch (e) {
+                  // fallback hide
+                  el.classList.remove('show');
+                  el.style.display = 'none';
+                }
+              }, 3000);
+            });
+          } catch (e) { /* ignore */ }
+        }
+
+        document.addEventListener('DOMContentLoaded', autoCloseAlerts);
+        // Turbo (if used) fires this on each page change
+        document.addEventListener('turbo:load', autoCloseAlerts);
+      })();
+    </script>
 
 </body>
 </html>
