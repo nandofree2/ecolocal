@@ -1,27 +1,41 @@
 <% content_for :page_title, "City" %>
 
 <div class="card">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <div class="card-tools">
-      <%= link_to new_city_path, class: "btn btn-sm btn-primary" do %>
-        <i class="fas fa-plus"></i> New City
-      <% end %>
-    </div>
+  <div class="card-header ">
+      <div class="mb-4">
+        <%= search_form_for @q, url: cities_path, method: :get, html: { class: "row g-2 align-items-end" } do |f| %>
+          <div class="col-md-1">
+            <%= f.label :name_or_sku_province_cont, "Search", class: "form-label" %>
+            <%= f.search_field :name_or_sku_or_province_name_cont, placeholder: "name or sku...", class: "form-control" %>
+          </div>
+
+          <div class="col-md-2">
+            <%= f.submit "Search", class: "btn btn-primary" %>
+          </div>
+          <div class="col-md-2">
+            <%= link_to new_city_path, class: "btn btn-sm btn-primary" do %>
+              <i class="fas fa-plus"></i> New Category
+            <% end %>
+          </div>
+        <% end %>
+      </div>
   </div>
 
   <div class="card-body table-responsive p-0">
     <table class="table table-hover text-nowrap mb-0">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Province</th>
-          <th>Sku</th>
+          <th>#</th>
+          <th><%=sort_link @q, :name, "Name"%></th>
+          <th><%=sort_link @q, :province_name, "Province"%></th>
+          <th><%=sort_link @q, :sku,"Sku"%></th>
           <th>Description</th>
         </tr>
       </thead>
       <tbody>
-        <% @cities.each do |city| %>
+        <% @cities.each_with_index do |city, index| %>
           <tr>
+            <td><%= (@cities.current_page - 1) * @cities.limit_value + index + 1 %></td>
             <td><%= city.name %></td>
             <td><%= city.province.name %></td>
             <td><%= city.sku %></td>

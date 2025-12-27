@@ -39,6 +39,7 @@
     <table class="table table-hover text-nowrap mb-0">
       <thead>
         <tr>
+          <th> # </th>
           <th><%= sort_link @q, :name, "Name" %></th>
           <th><%= sort_link @q, :sku, "SKU" %></th>
           <th><%= sort_link @q, :category_name, "Category" %></th>
@@ -47,8 +48,9 @@
         </tr>
       </thead>
       <tbody>
-        <% @products.each do |product| %>
+        <% @products.each_with_index do |product, index| %>
           <tr>
+            <td><%= (@products.current_page - 1) * @products.limit_value + index + 1 %></td>
             <td><%= product.name %></td>
             <td><%= product.sku %></td>
             <td><%= product.category.name %></td>

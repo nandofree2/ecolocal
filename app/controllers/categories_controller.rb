@@ -3,7 +3,11 @@ class CategoriesController < ApplicationController
   authorize_resource
 
   def index
-    @categories = Category.all
+    @q = Category.ransack(params[:q])
+    @categories = @q.result
+                  .order(created_at: :desc)
+                  .page(params[:page])
+                  .per(20)
   end
 
   def show
