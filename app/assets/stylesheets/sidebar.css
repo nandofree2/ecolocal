@@ -1,0 +1,33 @@
+
+/* Sidebar background */
+.sidebar-custom {
+  background-color: #0F172A;
+  /* Dark Slate */
+}
+
+/* Menu text */
+.sidebar-custom .nav-link {
+  color: #CBD5E1;
+}
+
+/* Hover */
+.sidebar-custom .nav-link:hover {
+  background-color: #1E293B;
+  color: #FFFFFF;
+}
+
+/* Active menu */
+.sidebar-custom .nav-link.active {
+  background-color: #2563EB;
+  color: #FFFFFF;
+}
+
+/* Brand/logo */
+.sidebar-custom .brand-link {
+  background-color: #020617;
+  color: #FFFFFF;
+}
+
+.dark-mode .sidebar-custom {
+  background-color: #020617;
+}
