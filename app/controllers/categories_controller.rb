@@ -4,10 +4,7 @@ class CategoriesController < ApplicationController
 
   def index
     @q = Category.ransack(params[:q])
-    @categories = @q.result
-                  .order(created_at: :desc)
-                  .page(params[:page])
-                  .per(20)
+    @categories = @q.result.order(created_at: :desc).page(params[:page]).per(20)
   end
 
   def show
@@ -27,11 +24,14 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
-        format.html { redirect_to @category, notice: "Create category was successfully created." }
-        format.json { render :show, status: :created, location: @category }
+        format.html { redirect_to categories_path, notice: "Create category was successfully created." }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
+        @q = Category.ransack(params[:q])
+
+        @categories = @q.result.order(created_at: :desc).page(params[:page]).per(20)
+        format.html { redirect_to categories_path, alert: @category.errors.full_messages.to_sentence}
+
+        # format.json { render json: @category.errors, status: :unprocessable_entity }
       end
     end
   end

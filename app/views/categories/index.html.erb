@@ -14,8 +14,10 @@
             <%= f.submit "Search", class: "btn btn-primary" %>
           </div>
           <div class="col-md-2">
-            <%= link_to new_category_path, class: "btn btn-sm btn-primary" do %>
-              <i class="fas fa-plus"></i> New Category
+            <%= link_to "#", class: "btn btn-primary shadow-sm w-100", 
+                style: "background-color: #6366F1; border: none; border-radius: 10px; padding: 8px 15px; font-weight: 600;",
+                data: { bs_toggle: "modal", bs_target: "#categoryModal" } do %>
+              <i class="fas fa-plus-circle mr-1"></i> New Category
             <% end %>
           </div>
         <% end %>

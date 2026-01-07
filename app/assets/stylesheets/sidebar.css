@@ -1,5 +1,8 @@
 
 /* Sidebar background */
+.sidebar{
+    padding-left: 0;
+}
 .sidebar-custom {
   background-color: #0F172A;
   /* Dark Slate */
@@ -22,12 +25,60 @@
   color: #FFFFFF;
 }
 
-/* Brand/logo */
-.sidebar-custom .brand-link {
-  background-color: #020617;
-  color: #FFFFFF;
+
+/* Sidebar Container */
+.main-sidebar {
+    background-color: #FFFFFF !important; /* Latar putih bersih */
+    border-right: 1px solid #F1F5F9; /* Garis tipis di kanan */
 }
 
-.dark-mode .sidebar-custom {
-  background-color: #020617;
+/* Brand/Logo Area */
+.brand-link {
+    border-bottom: 1px solid #F1F5F9 !important;
+    color: #1E293B !important;
+    font-weight: 700;
+    padding: 20px 15px !important;
+}
+
+/* Jarak antar menu */
+.nav-sidebar {
+    padding: 5px 5px !important;
+}
+
+/* Link Menu Default */
+.nav-sidebar .nav-link {
+    color: #64748B !important; /* Warna teks abu-abu modern */
+    border-radius: 12px !important; /* Membuat sudut membulat */
+    margin-bottom: 5px;
+    padding: 10px 15px !important;
+    transition: all 0.3s ease;
+}
+
+/* Hover State */
+.nav-sidebar .nav-link:hover {
+    background-color: #F8FAFC !important;
+    color: #6366F1 !important;
+}
+
+/* Active Menu State (Ungu sesuai referensi) */
+.nav-sidebar .nav-item .nav-link.active {
+    background-color: #EEF2FF !important; /* Background ungu muda */
+    color: #6366F1 !important; /* Warna teks ungu */
+    box-shadow: none !important;
+}
+
+/* Icon Styling */
+.nav-link i {
+    margin-right: 10px !important;
+    font-size: 1.1rem;
+    color: #94A3B8; /* Warna icon default */
+}
+
+.nav-link.active i {
+    color: #6366F1 !important; /* Warna icon saat aktif */
+}
+
+/* Menghilangkan panah bawaan AdminLTE jika ingin lebih clean */
+.nav-sidebar .nav-link p .right {
+    top: 14px;
 }
