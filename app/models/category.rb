@@ -1,7 +1,7 @@
 class Category < ApplicationRecord
   has_many :products, dependent: :restrict_with_error
   validates_presence_of :name, :sku
-  validates_uniqueness_of :sku
+  validates_uniqueness_of :name, :sku
 
   after_update :update_product_sku
 

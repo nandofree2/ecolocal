@@ -47,6 +47,7 @@
               <%= v %>
               <button type="button"class="btn-close"data-bs-dismiss="alert"aria-label="Close"></button>
             </div>
+            
           <% end %>
           <%= yield %>
         </div>
@@ -64,6 +65,7 @@
 
   <%= render "shared/product_delete_modal" %>
   <%= render "shared/category_delete_modal" %>
+  <%= render "shared/category_form_modal" %>
   <%= render "shared/city_delete_modal" %>
   <%= render "shared/unit_of_measurement_delete_modal" %>
   <%= render "shared/province_delete_modal" %>
