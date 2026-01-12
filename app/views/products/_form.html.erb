@@ -1,88 +1,103 @@
-<%= form_with(model: product, local: true) do |form| %>
-  <% if product.errors.any? %>
-    <div class="alert alert-danger">
-      <h4>Errors:</h4>
-      <ul>
-        <% product.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="form-row">
-    <div class="form-group col-md-3">
-      <%= form.label :name %>
-      <%= form.text_field :name, class: "form-control", required: true %>
-    </div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title"><%= product.new_record? ? "New Product" : "Edit Product" %></h3>
+      </div>
+      <%= form_with(model: product, local: true) do |form| %>
+        <% if product.errors.any? %>
+          <div class="card-body">
 
-  </div>
-
-  <div class="form-row">
-    <div class="form-group col-md-3">
-      <%= form.label :status_product, "Status" %>
-      <%= form.select :status_product, Product.status_products.keys.map { |s| [s.titleize, s] },
-            { prompt: "Select status" },
-            class: "form-control" %>
-    </div>
-
-    <div class="form-group col-md-3">
-      <%= form.label :unit_of_measurement_id, "Unit of Measurement" %>
-      <%= form.select :unit_of_measurement_id,
-            @unit_of_measurements.map { |id, name| [name, id] },
-            { prompt: "Select UOM" },
-            class: "form-control",
-            required: true %>
-    </div>
-
-    <div class="form-group col-md-3">
-      <%= form.label :category_id, "Category" %>
-      <%= form.select :category_id,
-            @categories.map { |id, name| [name, id] },
-            { prompt: "Select Category" },
-            class: "form-control",
-            required: true %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :description %>
-    <%= form.text_area :description, rows: 4, class: "form-control" %>
-  </div>
-
-  <div class="form-group mt-4">
-    <%= form.label :cover_image, "Cover Image" %>
-    <%= form.file_field :cover_image, accept: "image/*", class: "form-control-file", onchange: "previewCoverImage(event)" %>
-
-    <div class="mt-2">
-      <% if product.cover_image.attached? %>
-        <img id="coverPreview" src="<%= url_for(product.cover_image) %>" class="img-thumbnail" style="max-height:150px;">
-      <% else %>
-        <img id="coverPreview" class="img-thumbnail d-none" style="max-height:150px;">
-      <% end %>
-    </div>
-  </div>
-
-  <div class="form-group mt-3">
-    <%= form.label :preview_images, "Preview Images (max 5)" %>
-    <%= form.file_field :preview_images, multiple: true, accept: "image/*", class: "form-control-file", onchange: "previewMultipleImages(event)" %>
-
-    <div id="previewContainer" class="mt-2 d-flex flex-wrap">
-      <% if product.preview_images.attached? %>
-        <% product.preview_images.each do |img| %>
-          <div class="me-2 mb-2 text-center">
-            <img src="<%= url_for(img) %>" class="img-thumbnail" style="max-height:120px; display:block;" />
-                <div class="mt-1">
-                  <button type="button" class="btn btn-sm btn-outline-danger remove-preview-btn" data-url="<%= purge_preview_image_product_path(product, attachment_id: img.id) %>">Remove</button>
-                </div>
+            <div class="alert alert-danger">
+              <h4>Errors:</h4>
+              <ul>
+                <% product.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
           </div>
         <% end %>
+        <div class="card-body">
+
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <%= form.label :name %>
+              <%= form.text_field :name, class: "form-control", required: true %>
+            </div>
+
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <%= form.label :status_product, "Status" %>
+              <%= form.select :status_product, Product.status_products.keys.map { |s| [s.titleize, s] },
+                    { prompt: "Select status" },
+                    class: "form-control" %>
+            </div>
+
+            <div class="form-group col-md-3">
+              <%= form.label :unit_of_measurement_id, "Unit of Measurement" %>
+              <%= form.select :unit_of_measurement_id,
+                    @unit_of_measurements.map { |id, name| [name, id] },
+                    { prompt: "Select UOM" },
+                    class: "form-control",
+                    required: true %>
+            </div>
+
+            <div class="form-group col-md-3">
+              <%= form.label :category_id, "Category" %>
+              <%= form.select :category_id,
+                    @categories.map { |id, name| [name, id] },
+                    { prompt: "Select Category" },
+                    class: "form-control",
+                    required: true %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :description %>
+            <%= form.text_area :description, rows: 4, class: "form-control" %>
+          </div>
+
+          <div class="form-group mt-4">
+            <%= form.label :cover_image, "Cover Image" %>
+            <%= form.file_field :cover_image, accept: "image/*", class: "form-control-file", onchange: "previewCoverImage(event)" %>
+
+            <div class="mt-2">
+              <% if product.cover_image.attached? %>
+                <img id="coverPreview" src="<%= url_for(product.cover_image) %>" class="img-thumbnail" style="max-height:150px;">
+              <% else %>
+                <img id="coverPreview" class="img-thumbnail d-none" style="max-height:150px;">
+              <% end %>
+            </div>
+          </div>
+
+          <div class="form-group mt-3">
+            <%= form.label :preview_images, "Preview Images (max 5)" %>
+            <%= form.file_field :preview_images, multiple: true, accept: "image/*", class: "form-control-file", onchange: "previewMultipleImages(event)" %>
+
+            <div id="previewContainer" class="mt-2 d-flex flex-wrap">
+              <% if product.preview_images.attached? %>
+                <% product.preview_images.each do |img| %>
+                  <div class="me-2 mb-2 text-center">
+                    <img src="<%= url_for(img) %>" class="img-thumbnail" style="max-height:120px; display:block;" />
+                        <div class="mt-1">
+                          <button type="button" class="btn btn-sm btn-outline-danger remove-preview-btn" data-url="<%= purge_preview_image_product_path(product, attachment_id: img.id) %>">Remove</button>
+                        </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="form-group mt-4">
+            <%= form.submit class: "btn btn-primary" %>
+            <%= link_to "Back", products_path, class: "btn btn-secondary ml-2" %>
+          </div>
+        </div>
       <% end %>
     </div>
   </div>
-
-  <div class="form-group mt-4">
-    <%= form.submit class: "btn btn-primary" %>
-    <%= link_to "Back", products_path, class: "btn btn-secondary ml-2" %>
-  </div>
-<% end %>
+</div>
