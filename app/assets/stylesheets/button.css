@@ -1,0 +1,23 @@
+.btn-custom-primary {
+    background-color: #6366F1 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 8px 15px !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-custom-primary:hover {
+    background-color: #4f46e5 !important; /* Warna sedikit lebih gelap */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    color: white !important;
+}
+
+.btn-custom-primary:active {
+    transform: translateY(0);
+}

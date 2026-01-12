@@ -1,0 +1,97 @@
+.modal .form-label {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.modal .form-control {
+    border-radius: 10px !important;
+    padding: 10px 15px !important;
+    box-shadow: none !important;
+    border: 1px solid #dee2e6;
+}
+
+.modal .form-control:focus {
+    border-color: #6366F1 !important;
+    box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.1) !important;
+}
+.modal-content {
+    border: 0 !important;
+    border-radius: 15px !important; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    overflow: hidden; 
+}
+
+.modal-header {
+    border-bottom: 0 !important;
+    padding: 1.5rem 1.5rem 0 1.5rem !important;
+}
+
+.modal-title {
+    font-weight: 800 !important;
+    color: #1f2937;
+}
+.modal-footer {
+    border-top: 0 !important;
+    padding: 1rem 1rem 1rem 1rem !important;
+}
+
+.modal-footer .btn {
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    padding: 10px 25px !important;
+    transition: all 0.2s ease;
+}
+
+.modal-footer .btn-primary {
+    background-color: #6366F1 !important;
+    border: none !important;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: #4f46e5 !important;
+    transform: translateY(-1px);
+}
+
+.modal-footer .btn-light {
+    background-color: #f3f4f6 !important;
+    border: 1px solid #e5e7eb !important;
+    color: #374151 !important;
+}
+
+.modal-footer .btn-light:hover {
+    background-color: #e5e7eb !important;
+}
+
+.success-toast {
+  position: fixed !important;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  border-radius: 12px !important;
+  border: none !important;
+  background-color: #10B981 !important;
+  color: white !important;
+  padding: 15px 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.modal-footer .btn-danger {
+    background-color: #EF4444 !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 10px 25px !important;
+    font-weight: 700 !important;
+}
+
+.modal-footer .btn-danger:hover {
+    background-color: #DC2626 !important;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
+}
+
+@media (min-width: 576px) {
+    .modal-sm-custom {
+        max-width: 400px;
+    }
+}

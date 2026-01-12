@@ -24,14 +24,14 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
+        format.json { render json: @category, status: :created }
         format.html { redirect_to categories_path, notice: "Create category was successfully created." }
       else
         @q = Category.ransack(params[:q])
 
         @categories = @q.result.order(created_at: :desc).page(params[:page]).per(20)
         format.html { redirect_to categories_path, alert: @category.errors.full_messages.to_sentence}
-
-        # format.json { render json: @category.errors, status: :unprocessable_entity }
+        format.json { render json: @category.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -41,7 +41,7 @@ class CategoriesController < ApplicationController
     respond_to do |format|
       if @category.update(category_params)
         format.html { redirect_to @category, notice: "Create category was successfully updated.", status: :see_other }
-        format.json { render :show, status: :ok, location: @category }
+        format.json { render json: @category, status: :created }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @category.errors, status: :unprocessable_entity }

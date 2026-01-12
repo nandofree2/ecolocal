@@ -23,16 +23,25 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Select all permissions
-  document.getElementById('select-all-permissions').addEventListener('click', function () {
-    const allChecked = document.querySelectorAll('.permission-checkbox:checked').length ===
-      document.querySelectorAll('.permission-checkbox').length;
-    document.querySelectorAll('.permission-checkbox').forEach(function (cb) {
-      cb.checked = !allChecked;
-    });
-    document.querySelectorAll('.select-all-row, .select-all-column').forEach(function (cb) {
-      cb.checked = !allChecked;
-    });
-  });
+  document.addEventListener('DOMContentLoaded', function () {
+    const selectAllBtn = document.getElementById('select-all-permissions');
+    
+    // Check if the element exists first to avoid errors on other pages
+    if (selectAllBtn) {
+        selectAllBtn.addEventListener('click', function () {
+            const allChecked = document.querySelectorAll('.permission-checkbox:checked').length ===
+                               document.querySelectorAll('.permission-checkbox').length;
+            
+            document.querySelectorAll('.permission-checkbox').forEach(function (cb) {
+                cb.checked = !allChecked;
+            });
+            
+            document.querySelectorAll('.select-all-row, .select-all-column').forEach(function (cb) {
+                cb.checked = !allChecked;
+            });
+        });
+    }
+});
 
   // Update row select-all checkboxes based on individual checkboxes
   function updateRowSelectAll() {
