@@ -34,33 +34,36 @@ puts "✅ Created roles: Admin, Manager, User"
 puts "📧 Test Admin account: admin@test.com / 12341234"
 puts "📧 Test manager account: manager@test.com / 12341234"
 
-unless Category.exists?(1)
-  Category.find_or_create_by!(id: 1, name: "T-shirt", sku: "TS")
-  Category.find_or_create_by!(id: 2, name: "Jeans", sku: "JN")
-  Category.find_or_create_by!(id: 3, name: "Sweater", sku: "SW")
-  Category.find_or_create_by!(id: 4, name: "accessories", sku: "AC")
-  Category.find_or_create_by!(id: 5, name: "dresses", sku: "DR")
+if Category.count == 0
+  Category.find_or_create_by!(name: "T-shirt", sku: "TS")
+  Category.find_or_create_by!(name: "Jeans", sku: "JN")
+  Category.find_or_create_by!(name: "Sweater", sku: "SW")
+  Category.find_or_create_by!(name: "accessories", sku: "AC")
+  Category.find_or_create_by!(name: "dresses", sku: "DR")
 end
 
 puts "✅ Created Categories"
 
-unless UnitOfMeasurement.exists?(1)
-  UnitOfMeasurement.find_or_create_by!(id: 1, name: "PCS", sku: "PC", quantity:1)
-  UnitOfMeasurement.find_or_create_by!(id: 2, name: "Lusin", sku: "LS", quantity:12)
-  UnitOfMeasurement.find_or_create_by!(id: 3, name: "Box", sku: "BX", quantity:20)
-  UnitOfMeasurement.find_or_create_by!(id: 4, name: "Gross", sku: "GR", quantity:144)
+if UnitOfMeasurement.count == 0
+  UnitOfMeasurement.find_or_create_by!(name: "PCS", sku: "PC", quantity:1)
+  UnitOfMeasurement.find_or_create_by!(name: "Lusin", sku: "LS", quantity:12)
+  UnitOfMeasurement.find_or_create_by!(name: "Box", sku: "BX", quantity:20)
+  UnitOfMeasurement.find_or_create_by!(name: "Gross", sku: "GR", quantity:144)
 end
 puts "✅ Created Unit of Measurements"
 
+category_ids = Category.ids
+uom_ids = UnitOfMeasurement.ids
+
 100.times do
-  Product.find_or_create_by!(
+  Product.create!(
     name: Faker::Commerce.product_name,
     sku: rand(10000..99999).to_s,
     description: Faker::Lorem.sentence(word_count: 5),
     status_product: 1,
     price: rand(10.0..500.0).round(2),
-    category_id: rand(1..5),
-    unit_of_measurement_id: rand(1..4)
+    category_id: category_ids.sample,
+    unit_of_measurement_id: uom_ids.sample
     )
   end
 
@@ -160,7 +163,7 @@ cities = [
   { province: "Jawa Timur", name: "Kota Malang", sku: "MLG" },
   { province: "Jawa Timur", name: "Kabupaten Sidoarjo", sku: "SDA" },
   { province: "Bali", name: "Kota Denpasar", sku: "DPS" },
-  { province: "Bali", name: "Kabupaten Badung", sku: "BDG" },
+  { province: "Bali", name: "Kabupaten Badung", sku: "BDN" },
   { province: "Nusa Tenggara Barat", name: "Kota Mataram", sku: "MTR" },
   { province: "Nusa Tenggara Timur", name: "Kota Kupang", sku: "KPG" },
   { province: "Kalimantan Timur", name: "Kota Samarinda", sku: "SMD" },

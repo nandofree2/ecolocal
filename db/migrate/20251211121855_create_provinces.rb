@@ -1,6 +1,8 @@
 class CreateProvinces < ActiveRecord::Migration[7.2]
   def change
-    create_table :provinces do |t|
+    enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
+
+    create_table :provinces, id: :uuid do |t|
       t.string :name
       t.string :sku
       t.text :description

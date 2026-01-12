@@ -1,6 +1,8 @@
 class CreateUnitOfMeasurements < ActiveRecord::Migration[7.2]
   def change
-    create_table :unit_of_measurements do |t|
+    enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
+
+    create_table :unit_of_measurements, id: :uuid do |t|
       t.string :name
       t.string :sku
       t.integer :quantity
