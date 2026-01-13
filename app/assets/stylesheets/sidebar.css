@@ -36,7 +36,7 @@
 .nav-sidebar .nav-link {
     color: #64748b !important;
     border-radius: 8px !important;
-    padding: 0.6rem 1rem !important;
+    padding: 0.6rem 0rem !important;
     font-weight: 500;
     font-size: 0.925rem;
     display: flex;
