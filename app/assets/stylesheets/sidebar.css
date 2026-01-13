@@ -1,84 +1,124 @@
+/* sidebar.css */
 
-/* Sidebar background */
-.sidebar{
-    padding-left: 0;
-}
-.sidebar-custom {
-  background-color: #0F172A;
-  /* Dark Slate */
-}
-
-/* Menu text */
-.sidebar-custom .nav-link {
-  color: #CBD5E1;
-}
-
-/* Hover */
-.sidebar-custom .nav-link:hover {
-  background-color: #1E293B;
-  color: #FFFFFF;
-}
-
-/* Active menu */
-.sidebar-custom .nav-link.active {
-  background-color: #2563EB;
-  color: #FFFFFF;
-}
-
-
-/* Sidebar Container */
+/* Main Container Refinement */
 .main-sidebar {
-    background-color: #FFFFFF !important; /* Latar putih bersih */
-    border-right: 1px solid #F1F5F9; /* Garis tipis di kanan */
+    background-color: #ffffff !important;
+    border-right: 1px solid #e2e8f0 !important;
+    box-shadow: none !important;
+    transition: width 0.3s ease-in-out;
 }
 
-/* Brand/Logo Area */
+/* Brand Section */
 .brand-link {
-    border-bottom: 1px solid #F1F5F9 !important;
-    color: #1E293B !important;
-    font-weight: 700;
-    padding: 20px 15px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    padding: 1.25rem 1rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Jarak antar menu */
+.brand-text {
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    letter-spacing: -0.025em;
+    font-size: 1.1rem;
+}
+
+/* Sidebar Navigation */
 .nav-sidebar {
-    padding: 5px 5px !important;
+    padding: 0.75rem !important;
 }
 
-/* Link Menu Default */
+.nav-sidebar .nav-item {
+    margin-bottom: 4px;
+}
+
 .nav-sidebar .nav-link {
-    color: #64748B !important; /* Warna teks abu-abu modern */
-    border-radius: 12px !important; /* Membuat sudut membulat */
-    margin-bottom: 5px;
-    padding: 10px 15px !important;
-    transition: all 0.3s ease;
+    color: #64748b !important;
+    border-radius: 8px !important;
+    padding: 0.6rem 1rem !important;
+    font-weight: 500;
+    font-size: 0.925rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+/* Icons */
+.nav-sidebar .nav-link i.nav-icon {
+    color: #94a3b8;
+    margin-right: 12px !important;
+    font-size: 1rem;
+    width: 20px;
+    text-align: center;
 }
 
 /* Hover State */
 .nav-sidebar .nav-link:hover {
-    background-color: #F8FAFC !important;
-    color: #6366F1 !important;
+    background-color: #f8fafc !important;
+    color: #4f46e5 !important;
 }
 
-/* Active Menu State (Ungu sesuai referensi) */
+.nav-sidebar .nav-link:hover i {
+    color: #4f46e5 !important;
+}
+
+/* Active State */
 .nav-sidebar .nav-item .nav-link.active {
-    background-color: #EEF2FF !important; /* Background ungu muda */
-    color: #6366F1 !important; /* Warna teks ungu */
-    box-shadow: none !important;
+    background-color: #eef2ff !important;
+    color: #4f46e5 !important;
+    font-weight: 600;
 }
 
-/* Icon Styling */
-.nav-link i {
-    margin-right: 10px !important;
-    font-size: 1.1rem;
-    color: #94A3B8; /* Warna icon default */
+.nav-sidebar .nav-item .nav-link.active i {
+    color: #4f46e5 !important;
 }
 
-.nav-link.active i {
-    color: #6366F1 !important; /* Warna icon saat aktif */
+/* Dropdown / Treeview Customization */
+.nav-treeview {
+    padding-left: 1rem;
 }
 
-/* Menghilangkan panah bawaan AdminLTE jika ingin lebih clean */
-.nav-sidebar .nav-link p .right {
-    top: 14px;
+.nav-treeview > .nav-item > .nav-link {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem !important;
+}
+
+.nav-sidebar .menu-open > .nav-link i.right {
+    transform: rotate(-90deg);
+}
+
+/* Responsive Adjustments for Tablet/Mobile */
+@media (max-width: 991.98px) {
+    /* Ensure sidebar is hidden by default on tablet/mobile unless explicitly toggled */
+    .sidebar-open .main-sidebar {
+        margin-left: 0 !important;
+        width: 250px !important;
+    }
+
+    .main-sidebar {
+        margin-left: -250px !important;
+        position: fixed;
+        height: 100vh;
+        z-index: 1040;
+    }
+
+    /* Create a backdrop when sidebar is open so clicking outside closes it */
+    .sidebar-open #sidebar-overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.1);
+        z-index: 1039;
+    }
+}
+
+/* Profile Section at Bottom (Optional addition) */
+.sidebar-user-panel {
+    border-top: 1px solid #f1f5f9;
+    margin-top: auto;
+    padding: 1rem;
 }
