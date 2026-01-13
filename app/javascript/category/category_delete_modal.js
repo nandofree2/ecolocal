@@ -9,23 +9,26 @@ document.addEventListener("turbo:load", () => {
 
   const modal = new bootstrap.Modal(modalElement);
 
-  document.querySelectorAll(".category-show-delete-modal").forEach((button) => {
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
+  // delegated click handler so dynamically inserted rows are handled
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest(".category-show-delete-modal");
+    if (!button) return;
+    event.preventDefault();
 
-      const url  = button.dataset.url;
-      const name = button.dataset.name;
-      const sku  = button.dataset.sku;
+    const url  = button.dataset.url;
+    const name = button.dataset.name;
+    const sku  = button.dataset.sku;
 
-      deleteForm.action = url;
+    deleteForm.action = url;
 
-      itemNameElement.textContent = name;
-      itemSkuElement.textContent  = sku;
+    itemNameElement.textContent = name;
+    itemSkuElement.textContent  = sku;
 
+    if (fadeItem) {
       fadeItem.classList.remove("showing");
       setTimeout(() => fadeItem.classList.add("showing"), 10);
+    }
 
-      modal.show();
-    });
+    modal.show();
   });
 });

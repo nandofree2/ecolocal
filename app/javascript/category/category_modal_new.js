@@ -22,20 +22,20 @@ function initCategoryForm() {
       return data;
     })
     .then(category => {
+      function escapeHTML(str) {
+        return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
       const newRowHTML = `
         <tr id="category_row_${category.id}" class="fade-in-row">
           <td class="row-number"></td>
-          <td>${category.name}</td>
-          <td>${category.sku}</td>
-          <td>${category.description || ''}</td>
+          <td>${escapeHTML(category.name)}</td>
+          <td>${escapeHTML(category.sku)}</td>
+          <td>${escapeHTML(category.description || '')}</td>
           <td class="text-right">
             <a href="/categories/${category.id}" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>
-            <a href="/categories/${category.id}/edit" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i></a>
-            <form class="d-inline" action="/categories/${category.id}" method="post">
-              <input type="hidden" name="_method" value="delete">
-              <input type="hidden" name="authenticity_token" value="${document.querySelector('meta[name="csrf-token"]').content}">
-              <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-            </form>
+            <a href="#" class="btn btn-sm btn-warning edit-category-btn" data-bs-toggle="modal" data-bs-target="#categoryModalEdit" data-id="${category.id}" data-name="${escapeHTML(category.name)}" data-sku="${escapeHTML(category.sku)}" data-description="${escapeHTML(category.description || '')}" data-url="/categories/${category.id}"><i class="fas fa-pencil-alt"></i></a>
+            <button type="button" class="btn btn-sm btn-danger category-show-delete-modal" data-url="/categories/${category.id}" data-name="${escapeHTML(category.name)}" data-sku="${escapeHTML(category.sku)}"><i class="fas fa-trash"></i></button>
           </td>
         </tr>
       `;
