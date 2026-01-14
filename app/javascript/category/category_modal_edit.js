@@ -129,7 +129,7 @@ function clearErrorsEdit() {
 function displayErrorsEdit(errors) {
   for (const [field, messages] of Object.entries(errors)) {
     const input = document.getElementById(`cat_${field}_edit`) || document.getElementById(`cat_${field}`);
-    const errorDiv = document.getElementById(`error-${field}`);
+    const errorDiv = document.querySelector('#category-form-edit #error-' + field) || document.getElementById(`error-${field}`);
     if (input && errorDiv) {
       input.classList.add('is-invalid');
       const customMsg = messages.map(m => {
@@ -137,6 +137,7 @@ function displayErrorsEdit(errors) {
         return m;
       }).join(", ");
       errorDiv.innerText = customMsg;
+      errorDiv.style.display = '';
     }
   }
 }
